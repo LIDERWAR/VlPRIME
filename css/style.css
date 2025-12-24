@@ -441,7 +441,10 @@ img {
 .service-card--private .service-card__icon-box,
 .service-card--corporate .service-card__title,
 .service-card--corporate .service-card__text,
-.service-card--corporate .service-card__icon-box {
+.service-card--corporate .service-card__icon-box,
+.service-card--postwarranty .service-card__title,
+.service-card--postwarranty .service-card__text,
+.service-card--postwarranty .service-card__icon-box {
     position: relative;
     z-index: 2;
     color: white;
@@ -450,7 +453,8 @@ img {
 
 /* Specific icon adjustment for these dark cards if needed */
 .service-card--private .service-card__icon-box,
-.service-card--corporate .service-card__icon-box {
+.service-card--corporate .service-card__icon-box,
+.service-card--postwarranty .service-card__icon-box {
     background-color: rgba(236, 97, 35, 0.2);
     /* Slightly more visible background for icon box */
     color: var(--color-primary);
@@ -459,14 +463,15 @@ img {
 
 /* On hover, ensure they stay visible */
 .service-card--private:hover .service-card__icon-box,
-.service-card--corporate:hover .service-card__icon-box {
+.service-card--corporate:hover .service-card__icon-box,
+.service-card--postwarranty:hover .service-card__icon-box {
     background-color: var(--color-primary);
     color: white;
 }
 
 /* Service Card Backgrounds (Added per user request) */
 .service-card--private {
-    background-image: url('../assets/img/service_audience_1.png');
+    background-image: url('../assets/img/audience_1.png');
     background-size: cover;
     background-position: center;
     background-color: var(--color-surface);
@@ -477,7 +482,17 @@ img {
 }
 
 .service-card--corporate {
-    background-image: url('../assets/img/service_audience_2.png');
+    background-image: url('../assets/img/audience_2.png');
+    background-size: cover;
+    background-position: center;
+    background-color: var(--color-surface);
+    /* Fallback */
+    background-clip: padding-box;
+    border-color: transparent;
+}
+
+.service-card--postwarranty {
+    background-image: url('../assets/img/audience_3.png');
     background-size: cover;
     background-position: center;
     background-color: var(--color-surface);
@@ -489,7 +504,8 @@ img {
 /* Overlay for these specific cards to ensure readability */
 /* Overlay for these specific cards to ensure readability */
 .service-card--private::before,
-.service-card--corporate::before {
+.service-card--corporate::before,
+.service-card--postwarranty::before {
     content: '';
     position: absolute;
     top: 0;
@@ -503,7 +519,8 @@ img {
 }
 
 .service-card--private:hover::before,
-.service-card--corporate:hover::before {
+.service-card--corporate:hover::before,
+.service-card--postwarranty:hover::before {
     background: linear-gradient(180deg, rgba(11, 11, 13, 0.4) 0%, rgba(11, 11, 13, 0.9) 100%);
 }
 
@@ -795,7 +812,8 @@ img {
 .promo-card__text {
     font-size: 1rem;
     color: #ccc;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
+    /* Increased from 30px to 60px as per user request (2x) */
 }
 
 /* Background Gradients for Cards */
