@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VL Prime - Премиальный автосервис</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700&family=Poppins:wght@600&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container header__container">
+            <div class="header__left">
+                <a href="#" class="logo">
+                    <img src="assets/icon/logo.svg" alt="VL Prime Logo" class="logo__img">
+                </a>
+                <div class="header__socials">
+                    <a href="#" class="social-link" aria-label="Phone"
+                        style="--icon-url: url('../assets/icon/social/phone.svg')"></a>
+                    <a href="#" class="social-link" aria-label="Telegram"
+                        style="--icon-url: url('../assets/icon/social/telegram.svg')"></a>
+                </div>
+            </div>
+
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="#hero" class="nav__link">ГЛАВНАЯ</a></li>
+                    <li class="nav__item"><a href="#about" class="nav__link">О НАС</a></li>
+                    <li class="nav__item"><a href="#main-services" class="nav__link">УСЛУГИ</a></li>
+                    <li class="nav__item"><a href="#promotions" class="nav__link">АКЦИИ</a></li>
+                    <li class="nav__item"><a href="#" class="nav__link">ГАЛЕРЕЯ</a></li>
+                    <li class="nav__item"><a href="#" class="nav__link">БЛОГ</a></li>
+                    <li class="nav__item"><a href="#contact" class="nav__link">КОНТАКТЫ</a></li>
+                </ul>
+            </nav>
+
+            <button class="burger-menu" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero__overlay"></div>
+        <div class="container">
+            <div class="hero__content">
+                <span class="hero__overhead">VL PRIME — ВАШ ПЕРСОНАЛЬНЫЙ АВТОЭКСПЕРТ</span>
+                <h1 class="hero__title">Профессиональный сервис Volvo <br>в Москве — опыт, доверие, гарантия.</h1>
+                <p class="hero__subtitle">Прозрачные цены, быстрая онлайн-запись и <br>индивидуальный подход к каждому
+                    клиенту.</p>
+                <a href="#contact" class="btn btn--primary">Записаться</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about section-padding">
+        <div class="container">
+            <div class="about__inner">
+                <div class="about__content">
+                    <span class="section-overhead">О КОМПАНИИ</span>
+                    <h2 class="section-title about__title">Экспертный подход к вашему Volvo</h2>
+                    <p class="about__text">
+                        VL Prime — это специализированный сервис, где каждый механик знает автомобили Volvo до
+                        мельчайших деталей.
+                        Мы объединяем многолетний опыт с современным оборудованием, чтобы обеспечить вашему автомобилю
+                        лучшие условия обслуживания.
+                    </p>
+                    <p class="about__text">
+                        Мы ценим ваше время и доверие, поэтому предлагаем прозрачные цены, оригинальные запчасти и
+                        гарантию на все виды работ.
+                    </p>
+                    <a href="#services" class="btn btn--primary">Наши услуги</a>
+                </div>
+                <div class="about__visual">
+                    <!-- Placeholder for About Image -->
+                    <img src="assets/img/servise.png" alt="О компании" class="about__img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services section-padding">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-overhead">ДЛЯ КОГО МЫ РАБОТАЕМ</span>
+                <h2 class="section-title">Мы обслуживаем</h2>
+            </div>
+
+            <div class="services__grid">
+                <!-- Service Card 1 -->
+                <article class="service-card">
+                    <div class="service-card__icon-box">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <h3 class="service-card__title">Частные клиенты</h3>
+                    <p class="service-card__text">
+                        Персональный подход к каждому владельцу Volvo. Прозрачная история обслуживания и комфортная зона
+                        ожидания.
+                    </p>
+                </article>
+
+                <!-- Service Card 2 -->
+                <article class="service-card">
+                    <div class="service-card__icon-box">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                    </div>
+                    <h3 class="service-card__title">Корпоративные парки</h3>
+                    <p class="service-card__text">
+                        Специальные условия для юридических лиц. Полный пакет документов, работа с НДС и приоритетная
+                        запись.
+                    </p>
+                </article>
+
+                <!-- Service Card 3 -->
+                <article class="service-card">
+                    <div class="service-card__icon-box">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="service-card__title">Постгарантия</h3>
+                    <p class="service-card__text">
+                        Профессиональное обслуживание автомобилей с пробегом. Оригинальные запчасти и качественные
+                        аналоги.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    </section>
+
+    <!-- Main Services Section -->
+    <section id="main-services" class="main-services section-padding">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-overhead">КОМПЛЕКСНЫЙ ПОДХОД</span>
+                <h2 class="section-title">Наши основные услуги</h2>
+            </div>
+
+            <div class="main-services__grid">
+                <!-- Card 1 -->
+                <div class="ms-card ms-card--service-1">
+                    <div class="ms-card__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path
+                                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="ms-card__title">Техническое обслуживание</h3>
+                    <ul class="ms-card__list">
+                        <li>Замена масла и фильтров</li>
+                        <li>Проверка тех. жидкостей</li>
+                        <li>Замена тормозных колодок</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="ms-card ms-card--service-2">
+                    <div class="ms-card__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="ms-card__title">Компьютерная диагностика</h3>
+                    <ul class="ms-card__list">
+                        <li>Чтение кодов ошибок</li>
+                        <li>Адаптация блоков</li>
+                        <li>Обновление ПО</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="ms-card ms-card--service-3">
+                    <div class="ms-card__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                            <rect x="9" y="9" width="6" height="6"></rect>
+                            <line x1="9" y1="1" x2="9" y2="4"></line>
+                            <line x1="15" y1="1" x2="15" y2="4"></line>
+                            <line x1="9" y1="20" x2="9" y2="23"></line>
+                            <line x1="15" y1="20" x2="15" y2="23"></line>
+                            <line x1="20" y1="9" x2="23" y2="9"></line>
+                            <line x1="20" y1="14" x2="23" y2="14"></line>
+                            <line x1="1" y1="9" x2="4" y2="9"></line>
+                            <line x1="1" y1="14" x2="4" y2="14"></line>
+                        </svg>
+                    </div>
+                    <h3 class="ms-card__title">Ремонт ДВС</h3>
+                    <ul class="ms-card__list">
+                        <li>Капитальный ремонт</li>
+                        <li>Замена цепей ГРМ</li>
+                        <li>Устранение течей</li>
+                    </ul>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="ms-card ms-card--service-4">
+                    <div class="ms-card__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="ms-card__title">Слесарный ремонт</h3>
+                    <ul class="ms-card__list">
+                        <li>Ремонт подвески</li>
+                        <li>Замена амортизаторов</li>
+                        <li>Рсход/Развал 3D</li>
+                    </ul>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="ms-card">
+                    <div class="ms-card__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="ms-card__title">Автоэлектрика</h3>
+                    <ul class="ms-card__list">
+                        <li>Ремонт проводки</li>
+                        <li>Установка сигнализаций</li>
+                        <li>Ремонт блоков управления</li>
+                    </ul>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="ms-card">
+                    <div class="ms-card__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="ms-card__title">Детейлинг</h3>
+                    <ul class="ms-card__list">
+                        <li>Химчистка салона</li>
+                        <li>Полировка кузова</li>
+                        <li>Керамическое покрытие</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promotions Section -->
+    <section id="promotions" class="promotions section-padding">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-overhead">СПЕЦИАЛЬНЫЕ ПРЕДЛОЖЕНИЯ</span>
+                <h2 class="section-title">Выгодное обслуживание</h2>
+            </div>
+
+            <div class="promotions__grid">
+                <!-- Promo 1 -->
+                <div class="promo-card promo-card--primary">
+                    <div class="promo-card__content">
+                        <span class="promo-card__label">НОВЫМ КЛИЕНТАМ</span>
+                        <h3 class="promo-card__title">Бесплатная диагностика<br>ходовой части</h3>
+                        <p class="promo-card__text">При первом посещении нашего сервиса — полная проверка подвески в
+                            подарок.</p>
+                        <a href="#contact" class="btn btn--outline">Записаться</a>
+                    </div>
+                    <div class="promo-card__bg"></div>
+                </div>
+
+                <!-- Promo 2 -->
+                <div class="promo-card promo-card--secondary">
+                    <div class="promo-card__content">
+                        <span class="promo-card__label">СЕЗОННОЕ ПРЕДЛОЖЕНИЕ</span>
+                        <h3 class="promo-card__title">Скидка 15% на<br>масляный сервис</h3>
+                        <p class="promo-card__text">При покупке масла и фильтров в нашем магазине — замена со скидкой.
+                        </p>
+                        <a href="#contact" class="btn btn--outline">Получить скидку</a>
+                    </div>
+                    <div class="promo-card__bg"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__col">
+                    <a href="#" class="footer__logo-link">
+                        <img src="assets/icon/logo.svg" alt="VL Prime" class="footer__logo-img">
+                    </a>
+                    <p>Лучший сервис для лучших автомобилей.</p>
+                </div>
+                <div class="footer__col">
+                    <h4>Контакты</h4>
+                    <p>Телефон: +7 (999) 000-00-00</p>
+                    <p>Адрес: г. Москва, ул. Примерная, д. 1</p>
+                </div>
+                <div class="footer__col">
+                    <h4>Режим работы</h4>
+                    <p>Пн-ВС: 09:00 - 21:00</p>
+                </div>
+            </div>
+            <div class="footer__copyright">
+                &copy; 2024 VL Prime. Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
