@@ -235,7 +235,8 @@ img {
 }
 
 .nav__link:hover {
-    color: #fff;
+    color: var(--color-primary);
+    transition: color 0.3s ease;
 }
 
 .burger-menu {
@@ -1182,6 +1183,125 @@ img {
     background: white;
     color: black;
     border-color: white;
+}
+
+/* --- Process Section --- */
+.process {
+    background-color: var(--color-bg);
+    /* Darker background */
+}
+
+.process__steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+    margin-top: 60px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+/* Connecting Line */
+.process__steps::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    /* Align with number center roughly */
+    left: 10%;
+    /* Start after first item */
+    right: 10%;
+    /* End before last item */
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(236, 97, 35, 0.5), transparent);
+    z-index: 1;
+}
+
+.process-step {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    padding: 0 10px;
+}
+
+.process-step__number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    box-shadow: 0 0 15px rgba(236, 97, 35, 0.1);
+    transition: all 0.3s ease;
+}
+
+.process-step:hover .process-step__number {
+    background-color: var(--color-primary);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(236, 97, 35, 0.4);
+}
+
+.process-step__title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.process-step__text {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+}
+
+.process__cta {
+    text-align: center;
+    margin-top: 60px;
+}
+
+/* Responsive Process */
+@media (max-width: 992px) {
+    .process__steps {
+        overflow-x: auto;
+        padding-bottom: 20px;
+        /* Space for scrollbar if needed */
+        /* Optional: make it carousel or stack. 
+           Mobile users prefer vertical stacking for steps usually. */
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .process__steps::before {
+        /* Vertical line for mobile */
+        top: 0;
+        bottom: 0;
+        left: 20px;
+        /* Align with left numbers? Or remove */
+        right: auto;
+        width: 1px;
+        height: 100%;
+        display: none;
+        /* Hide for simplicity or redesign */
+    }
+
+    .process-step {
+        display: flex;
+        align-items: flex-start;
+        text-align: left;
+        padding: 0;
+    }
+
+    .process-step__number {
+        margin: 0 20px 0 0;
+        flex-shrink: 0;
+        width: 50px;
+        height: 50px;
+        font-size: 1.1rem;
+    }
 }
 
 /* --- Facts Section (Mosaic Layout) --- */
