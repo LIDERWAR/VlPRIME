@@ -1304,6 +1304,123 @@ img {
     }
 }
 
+/* --- Cases Section --- */
+.cases {
+    background-color: var(--color-bg);
+}
+
+.cases__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.case-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.case-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.case-card__image-box {
+    height: 200px;
+    background-color: #2a2a2a;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #444;
+}
+
+.case-card__placeholder {
+    opacity: 0.5;
+}
+
+.case-card__badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.case-card__content {
+    padding: 24px;
+}
+
+.case-card__title {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.case-card__details {
+    margin-bottom: 25px;
+}
+
+.case-detail {
+    margin-bottom: 12px;
+}
+
+.case-detail:last-child {
+    margin-bottom: 0;
+}
+
+.case-detail__label {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.case-detail__text {
+    font-size: 0.95rem;
+    color: var(--color-text-main);
+    line-height: 1.5;
+}
+
+.case-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.case-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.case-meta.highlight {
+    color: var(--color-primary);
+    /* Green or Orange? Using Primary for brand consistency */
+    font-weight: 500;
+}
+
+@media (max-width: 992px) {
+    .cases__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* --- Facts Section (Mosaic Layout) --- */
 .facts {
     background-color: var(--color-surface);
