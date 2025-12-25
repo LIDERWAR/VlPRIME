@@ -1027,7 +1027,7 @@ img {
     align-items: center;
     justify-content: center;
     color: var(--color-primary);
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 
@@ -1075,6 +1075,7 @@ img {
 .adv-card--tall {
     grid-row: span 2;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(26, 26, 26, 1) 100%);
+    justify-content: space-evenly;
 }
 
 .adv-card__icon-box {
@@ -1404,13 +1405,13 @@ img {
     }
 
     .hero {
-        padding-top: 120px;
+        padding-top: 150px;
         min-height: auto;
         padding-bottom: 60px;
     }
 
     .hero__title {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
     }
 
     .about__visual {
@@ -1451,5 +1452,22 @@ img {
     .header__container {
         padding-left: 20px;
         padding-right: 20px;
+    }
+
+    /* Fix: Services Section Overflow */
+    .services .container {
+        padding-right: 20px !important;
+        padding-left: 20px !important;
+    }
+
+    .service-card {
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    /* Fix: Typography Overflow */
+    .section-title {
+        font-size: 1.75rem;
+        word-wrap: break-word;
     }
 }
