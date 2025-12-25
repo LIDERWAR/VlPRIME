@@ -916,7 +916,7 @@ img {
     padding: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 15px;
     transition: all 0.3s ease;
     overflow: hidden;
     position: relative;
@@ -1226,6 +1226,23 @@ img {
 }
 
 /* --- Responsive --- */
+@media (max-width: 1200px) {
+    .nav__list {
+        gap: 20px;
+        /* Reduced from 40px */
+    }
+
+    .header__left {
+        gap: 25px;
+        /* Reduced from 50px */
+    }
+
+    .nav__link {
+        font-size: 14px;
+        /* Reduced from 16px */
+    }
+}
+
 @media (max-width: 992px) {
     .nav {
         display: none;
@@ -1264,6 +1281,16 @@ img {
 
     .header__left {
         gap: 15px;
+    }
+
+    .about__title {
+        font-size: 2rem;
+        /* Reduced from 2.5rem to fit 2-col layout */
+    }
+
+    .about__text {
+        font-size: 0.95rem;
+        /* Slightly smaller text */
     }
 }
 
