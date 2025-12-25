@@ -1134,8 +1134,8 @@ img {
     }
 
     .adv-card--tall {
-        grid-row: auto;
-        /* Reset row span */
+        grid-row: span 2;
+        /* Stay tall on tablet */
         grid-column: span 1;
     }
 }
@@ -1279,28 +1279,16 @@ img {
         /* Vertical line for mobile */
         top: 0;
         bottom: 0;
-        left: 20px;
-        /* Align with left numbers? Or remove */
+        left: 50%;
+        transform: translateX(-50%);
         right: auto;
         width: 1px;
         height: 100%;
-        display: none;
-        /* Hide for simplicity or redesign */
+        font-size: 1rem;
     }
 
-    .process-step {
-        display: flex;
-        align-items: flex-start;
-        text-align: left;
-        padding: 0;
-    }
-
-    .process-step__number {
-        margin: 0 20px 0 0;
-        flex-shrink: 0;
-        width: 50px;
-        height: 50px;
-        font-size: 1.1rem;
+    .process-step:first-child {
+        margin-top: 20px;
     }
 }
 
@@ -1600,21 +1588,55 @@ img {
 
 @media (max-width: 576px) {
     .facts-mosaic {
-        grid-template-columns: 1fr;
-        /* Single column on mobile */
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 columns on mobile */
+        gap: 10px;
     }
 
     .fact-item {
         grid-column: span 1 !important;
         /* Reset spans */
+        padding: 10px;
+        min-height: 80px;
+        align-items: center;
+        text-align: center;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+
+    .fact-item__number {
+        font-size: 1.25rem;
+    }
+
+    .fact-item__label {
+        font-size: 0.75rem;
+        word-break: break-word;
     }
 
     .facts-wrapper {
-        padding: 30px 20px;
+        padding: 40px 30px;
+    }
+
+    .facts-intro {
+        text-align: center;
     }
 
     .facts-intro__title {
-        font-size: 2rem;
+        font-size: 1.5rem;
+    }
+
+    .facts-intro__text {
+        font-size: 0.9rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Center the last item (7th) if it's alone */
+    .facts-mosaic .fact-item:last-child {
+        grid-column: 1 / -1 !important;
+        width: calc((100% - 10px) / 2);
+        margin: 0 auto;
     }
 }
 
