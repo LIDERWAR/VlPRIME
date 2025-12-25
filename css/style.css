@@ -837,15 +837,32 @@ img {
     /* Increased from 30px to 60px as per user request (2x) */
 }
 
-/* Background Gradients for Cards */
+/* Background Images and Gradients for Cards */
+.promo-card--primary {
+    background-image: url('../assets/img/promo_1.png');
+    background-size: cover;
+    background-position: center;
+}
+
 .promo-card--primary .promo-card__bg {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(236, 97, 35, 0.15) 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 100%);
     z-index: 1;
+    transition: background 0.3s ease;
+}
+
+.promo-card--primary:hover .promo-card__bg {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+.promo-card--secondary {
+    background-image: url('../assets/img/promo_2.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .promo-card--secondary .promo-card__bg {
@@ -854,8 +871,13 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 100%);
     z-index: 1;
+    transition: background 0.3s ease;
+}
+
+.promo-card--secondary:hover .promo-card__bg {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 100%);
 }
 
 /* Outline Button Variant for Dark Cards */
@@ -898,8 +920,117 @@ img {
     transition: all 0.3s ease;
     overflow: hidden;
     position: relative;
-    gap: 24px;
 }
+
+.adv-card>* {
+    position: relative;
+    z-index: 2;
+}
+
+.adv-card--warranty .adv-card__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/img/adv_warranty.png');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.adv-card--warranty .adv-card__bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(11, 11, 13, 0.7) 0%, rgba(11, 11, 13, 0.95) 100%);
+    transition: background 0.3s ease;
+}
+
+.adv-card--warranty:hover .adv-card__bg::before {
+    background: linear-gradient(180deg, rgba(11, 11, 13, 0.5) 0%, rgba(11, 11, 13, 0.9) 100%);
+}
+
+.adv-card--warranty .adv-card__icon-small {
+    background-color: rgba(236, 97, 35, 0.2);
+    color: var(--color-primary);
+}
+
+.adv-card--vida .adv-card__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/img/adv_vida.png');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.adv-card--vida .adv-card__bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(11, 11, 13, 0.7) 0%, rgba(11, 11, 13, 0.95) 100%);
+    transition: background 0.3s ease;
+}
+
+.adv-card--vida:hover .adv-card__bg::before {
+    background: linear-gradient(180deg, rgba(11, 11, 13, 0.5) 0%, rgba(11, 11, 13, 0.9) 100%);
+}
+
+.adv-card--vida .adv-card__icon-small {
+    background-color: rgba(236, 97, 35, 0.2);
+    color: var(--color-primary);
+}
+
+.adv-card--convenience .adv-card__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/img/adv_convenience.png');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.adv-card--convenience .adv-card__bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(11, 11, 13, 0.7) 0%, rgba(11, 11, 13, 0.95) 100%);
+    transition: background 0.3s ease;
+}
+
+.adv-card--convenience:hover .adv-card__bg::before {
+    background: linear-gradient(180deg, rgba(11, 11, 13, 0.5) 0%, rgba(11, 11, 13, 0.9) 100%);
+}
+
+.adv-card--convenience .adv-card__icon-box {
+    width: 80px;
+    height: 80px;
+    background-color: rgba(236, 97, 35, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+}
+
+
 
 .adv-card:hover {
     transform: translateY(-5px);
