@@ -1137,6 +1137,21 @@
                     <div class="contacts__item">
                         <div class="contacts__icon">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                </path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="contacts__label">Email</h4>
+                            <p class="contacts__text">info@vlprime.ru</p>
+                        </div>
+                    </div>
+
+                    <div class="contacts__item">
+                        <div class="contacts__icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
@@ -1148,12 +1163,19 @@
                             <p class="contacts__subtext">Без выходных и перерывов</p>
                         </div>
                     </div>
+
+                    <div class="contacts__visual">
+                        <p class="contacts__visual-text">Вход и въезд в сервис:</p>
+                        <div class="contacts__facade-img">
+                            <img src="assets/img/about_main.jpg" alt="Фасад здания и въезд" />
+                        </div>
+                    </div>
                 </div>
 
                 <div class="contacts__map">
                     <!-- Yandex Map Placeholder -->
-                    <iframe src="https://yandex.ru/map-widget/v1/?ll=37.617635%2C55.755814&z=14" width="100%"
-                        height="450" frameborder="0" allowfullscreen="true" style="border-radius: 20px;"></iframe>
+                    <iframe src="https://yandex.ru/map-widget/v1/?ll=37.617635%2C55.755814&z=14" frameborder="0"
+                        allowfullscreen="true"></iframe>
                 </div>
             </div>
         </div>
@@ -1163,24 +1185,47 @@
     <footer id="main-footer" class="footer">
         <div class="container">
             <div class="footer__inner">
-                <div class="footer__col">
+                <div class="footer__col footer__col--info">
                     <a href="#" class="footer__logo-link">
                         <img src="assets/icon/logo.svg" alt="VL Prime" class="footer__logo-img">
                     </a>
-                    <p>Лучший сервис для лучших автомобилей.</p>
+                    <p class="footer__desc">
+                        Специализированный сервис Volvo в Москве.
+                        Профессиональный ремонт и обслуживание с гарантией качества и соблюдением стандартов
+                        производителя.
+                    </p>
                 </div>
+
                 <div class="footer__col">
-                    <h4>Контакты</h4>
-                    <p>Телефон: +7 (999) 000-00-00</p>
-                    <p>Адрес: г. Москва, ул. Примерная, д. 1</p>
+                    <h4 class="footer__title">Навигация</h4>
+                    <ul class="footer__nav">
+                        <li><a href="#services">Услуги</a></li>
+                        <li><a href="#about">О компании</a></li>
+                        <li><a href="#blog">Блог</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
                 </div>
+
                 <div class="footer__col">
-                    <h4>Режим работы</h4>
-                    <p>Пн-ВС: 09:00 - 21:00</p>
+                    <h4 class="footer__title">Контакты</h4>
+                    <ul class="footer__contacts">
+                        <li>
+                            <a href="tel:+79990000000" class="footer__phone">+7 (999) 000-00-00</a>
+                        </li>
+                        <li class="footer__address">г. Москва, ул. Примерная, д. 1</li>
+                        <li class="footer__worktime">Пн-Вс: 09:00 - 21:00</li>
+                    </ul>
                 </div>
             </div>
-            <div class="footer__copyright">
-                &copy; 2024 VL Prime. Все права защищены.
+
+            <div class="footer__bottom">
+                <div class="footer__copyright">
+                    &copy; 2024 VL Prime. Все права защищены.
+                </div>
+                <div class="footer__legal">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Согласие на обработку ПДн</a>
+                </div>
             </div>
         </div>
     </footer>
