@@ -29,4 +29,294 @@ document.addEventListener('DOMContentLoaded', () => {
             header.classList.remove('scrolled');
         }
     });
+
+
+    // --- Reviews Slider: Infinite Loop + Drag ---
+    const slider = document.querySelector('.reviews__slider');
+
+    if (slider) {
+        // 1. Clone content to create infinite effect (3 sets)
+        const originalContent = slider.innerHTML;
+        slider.innerHTML = originalContent + originalContent + originalContent;
+
+        // Re-query cards after cloning
+        let cards = document.querySelectorAll('.review-card');
+        const sliderContainer = slider; // Reference for clarity
+
+        let isAnimating = false; // Flag to prevent scroll interruptions
+
+        // 2. Initialize Scroll Position to the Middle Set
+        const initScroll = () => {
+            const totalWidth = slider.scrollWidth;
+            const oneSetWidth = totalWidth / 3;
+            // Only set if at start (first load)
+            if (slider.scrollLeft < 50) {
+                slider.scrollLeft = oneSetWidth;
+            }
+        };
+        // Small timeout to ensure layout is ready
+        setTimeout(initScroll, 10);
+
+
+        // 3. Infinite Scroll Jump Logic (Index-based + Precision Delta + Snap Disabling)
+        const handleInfiniteScroll = () => {
+            if (isAnimating) return;
+
+            // Use getBoundingClientRect for sub-pixel precision
+            const sliderRect = slider.getBoundingClientRect();
+            const sliderCenter = sliderRect.left + sliderRect.width / 2;
+
+            let closestIndex = -1;
+            let minDistance = Infinity;
+
+            // Find the card visually closest to center
+            cards.forEach((card, index) => {
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + cardRect.width / 2;
+                const dist = Math.abs(sliderCenter - cardCenter);
+
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    closestIndex = index;
+                }
+            });
+
+            if (closestIndex === -1) return;
+
+            const totalCards = cards.length;
+            const oneSetCount = totalCards / 3;
+            let delta = 0;
+
+            // Warp Logic: Always keep us in the Middle Set
+            if (closestIndex < oneSetCount) {
+                // Warp Forward: Set 1 -> Set 2
+                if (closestIndex + oneSetCount < totalCards) {
+                    const currentCard = cards[closestIndex];
+                    const targetCard = cards[closestIndex + oneSetCount];
+                    // Calculate precise delta based on screen positions
+                    delta = targetCard.getBoundingClientRect().left - currentCard.getBoundingClientRect().left;
+                }
+            } else if (closestIndex >= oneSetCount * 2) {
+                // Warp Backward: Set 3 -> Set 2
+                if (closestIndex - oneSetCount >= 0) {
+                    const currentCard = cards[closestIndex];
+                    const targetCard = cards[closestIndex - oneSetCount];
+                    // Calculate precise delta (negative direction)
+                    delta = -(currentCard.getBoundingClientRect().left - targetCard.getBoundingClientRect().left);
+                }
+            }
+
+            if (delta !== 0) {
+                // EXECUTE WARP
+
+                // 1. Disable Transitions globally on the slider to prevent "jump" from scale animations
+                slider.style.transition = 'none';
+                cards.forEach(c => c.style.transition = 'none');
+
+                // 2. Disable Snap 
+                slider.classList.add('active');
+
+                // 3. Apply Scroll Instantaneously
+                slider.scrollLeft += delta;
+
+                // 4. Force Update Active Slide Immediately at new position
+                // This ensures the target slide is ALREADY scaled when we turn transitions back on
+                updateActiveSlide();
+
+                // 5. Restore Transitions & Snap after render cycle
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        slider.classList.remove('active');
+                        // Restore transitions
+                        slider.style.transition = '';
+                        cards.forEach(c => c.style.transition = '');
+                    });
+                });
+            }
+        };
+
+        // Debounce timer for scroll end detection
+        let scrollTimeout;
+
+        slider.addEventListener('scroll', () => {
+            updateActiveSlide();
+
+            // Only trigger Infinite Scroll warp when scrolling STOPS
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                if (!isAnimating) {
+                    handleInfiniteScroll();
+                }
+            }, 60);
+        });
+
+
+        // 4. Drag Logic (Delta-based to support jumps)
+        let isDown = false;
+        let wasDragged = false;
+        let startPageX;
+        let lastPageX;
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            wasDragged = false; // Reset drag state
+            slider.classList.add('active'); // Disables snap via CSS for free drag
+            startPageX = e.pageX;
+            lastPageX = e.pageX;
+
+            // Cancel any pending warp
+            clearTimeout(scrollTimeout);
+        });
+
+        const stopDrag = () => {
+            isDown = false;
+            slider.classList.remove('active'); // Re-enables snap
+
+            // Manually trigger check after drag release to handle "fling to boundary"
+            // But let the scroll event debounce handle it naturally as momentum settles
+        };
+
+        slider.addEventListener('mouseleave', stopDrag);
+        slider.addEventListener('mouseup', stopDrag);
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+
+            // Check threshold to avoid treating micro-clicks as drags
+            if (!wasDragged && Math.abs(e.pageX - startPageX) < 5) return;
+
+            wasDragged = true; // Mark as dragged only after threshold
+            const currentX = e.pageX;
+            const walk = (currentX - lastPageX) * 2; // Speed multiplier
+            slider.scrollLeft -= walk;
+            lastPageX = currentX;
+        });
+
+        // Shared Smooth Scroll Function
+        const performSmoothScroll = (amount) => {
+            if (isAnimating) return;
+
+            // Disable snap and jump logic to allow smooth scroll
+            slider.classList.add('active');
+            isAnimating = true;
+            clearTimeout(scrollTimeout); // Cancel pending warps
+
+            slider.scrollBy({
+                left: amount,
+                behavior: 'smooth'
+            });
+
+            // Re-enable snap after scroll finishes
+            setTimeout(() => {
+                isAnimating = false;
+
+                // Immediately check infinite scroll to ensure we are in a valid zone
+                handleInfiniteScroll();
+
+                // Re-enable snap after warp is processed
+                requestAnimationFrame(() => {
+                    slider.classList.remove('active');
+                });
+            }, 800);
+        };
+
+        // 4.5 Click to Center (Ignore if dragged)
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                if (wasDragged) return;
+
+                const sliderRect = slider.getBoundingClientRect();
+                const cardRect = card.getBoundingClientRect();
+                const sliderCenter = sliderRect.width / 2;
+                const cardCenter = cardRect.left - sliderRect.left + (cardRect.width / 2);
+                const offset = cardCenter - sliderCenter;
+
+                performSmoothScroll(offset);
+            });
+        });
+
+
+        // 5. Mouse Wheel Support
+        let wheelTimeout;
+        slider.addEventListener('wheel', (e) => {
+            e.preventDefault();
+
+            // Disable snap temporarily for smooth scrolling
+            slider.classList.add('active');
+            clearTimeout(scrollTimeout); // Prevent warp during active wheeling
+
+            // Reset snap after scrolling stops
+            clearTimeout(wheelTimeout);
+            wheelTimeout = setTimeout(() => {
+                slider.classList.remove('active');
+                // The scroll event listener will handle the Infinite Scroll warp via its own debounce
+            }, 150);
+
+            // Scroll horizontally
+            slider.scrollLeft += e.deltaY + e.deltaX;
+        }, { passive: false });
+
+
+        // 6. Center Slide Magnification
+        function updateActiveSlide() {
+            const sliderRect = slider.getBoundingClientRect();
+            const center = sliderRect.left + (sliderRect.width / 2);
+
+            let closestCard = null;
+            let minDistance = Infinity;
+
+            cards.forEach(card => {
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + (cardRect.width / 2);
+                const distance = Math.abs(center - cardCenter);
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestCard = card;
+                }
+            });
+
+            cards.forEach(card => card.classList.remove('active-slide'));
+            if (closestCard) {
+                closestCard.classList.add('active-slide');
+            }
+        }
+
+        // Listeners for Highlight
+        window.addEventListener('resize', () => {
+            initScroll();
+            updateActiveSlide();
+        });
+
+        // 7. Auto-Slide Logic (Every 5 seconds)
+        let autoSlideInterval;
+
+        const startAutoSlide = () => {
+            stopAutoSlide(); // Ensure no duplicate intervals
+            autoSlideInterval = setInterval(() => {
+                if (isDown || isAnimating) return; // Don't slide if user is interacting
+
+                // Get single card width including gap
+                // Let's scroll by one card width (approximate or precise)
+                const cardWidth = cards[0].offsetWidth;
+                const gap = parseFloat(window.getComputedStyle(slider).gap) || 20;
+                const slideAmount = cardWidth + gap;
+
+                performSmoothScroll(slideAmount);
+            }, 5000);
+        };
+
+        const stopAutoSlide = () => {
+            clearInterval(autoSlideInterval);
+        };
+
+        // Pause on hover/interaction
+        slider.addEventListener('mouseenter', stopAutoSlide);
+        slider.addEventListener('mouseleave', startAutoSlide);
+        slider.addEventListener('mousedown', stopAutoSlide);
+
+        // Start initially
+        startAutoSlide();
+    }
 });
