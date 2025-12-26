@@ -319,4 +319,46 @@ document.addEventListener('DOMContentLoaded', () => {
         // Start initially
         startAutoSlide();
     }
+
+
+    // --- FAQ Accordion Logic ---
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const header = item.querySelector('.faq-item__header');
+        const content = item.querySelector('.faq-item__content');
+
+        header.addEventListener('click', () => {
+            const isOpen = item.classList.contains('active');
+
+            // Close all others (Accordion behavior)
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('.faq-item__header').setAttribute('aria-expanded', 'false');
+                    otherItem.querySelector('.faq-item__content').setAttribute('aria-hidden', 'true');
+
+                    // For smooth closing, we can explicitly set height to 0 if needed, but CSS max-height handles it well enough
+                    // If we wanted perfect animation we'd use scrollHeight
+                    otherItem.querySelector('.faq-item__content').style.maxHeight = null;
+                }
+            });
+
+            // Toggle current
+            item.classList.toggle('active');
+
+            if (!isOpen) {
+                // Opening
+                header.setAttribute('aria-expanded', 'true');
+                content.setAttribute('aria-hidden', 'false');
+                content.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                // Closing
+                header.setAttribute('aria-expanded', 'false');
+                content.setAttribute('aria-hidden', 'true');
+                content.style.maxHeight = null;
+            }
+        });
+    });
 });
+
