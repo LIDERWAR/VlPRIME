@@ -374,26 +374,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateGlobalSummary = () => {
         const allCheckboxes = document.querySelectorAll('.calc-checkbox:checked');
         let totalGlobal = 0;
-        let summaryHTML = '';
 
-        if (allCheckboxes.length === 0) {
-            summaryHTML = '<div class="summary-empty">Ничего не выбрано</div>';
-        } else {
-            allCheckboxes.forEach(cb => {
-                const price = parseInt(cb.dataset.price || 0);
-                const name = cb.dataset.service || 'Услуга';
-                totalGlobal += price;
+        if (globalSummaryList) {
+            globalSummaryList.innerHTML = ''; // Clear current
 
-                summaryHTML += `
-                    <div class="summary-item">
-                        <span class="summary-item__name">${name}</span>
-                        <span class="summary-item__price">${formatPrice(price)}</span>
-                    </div>
-                `;
-            });
+            if (allCheckboxes.length === 0) {
+                globalSummaryList.innerHTML = '<div class="summary-empty">Ничего не выбрано</div>';
+            } else {
+                allCheckboxes.forEach(cb => {
+                    const price = parseInt(cb.dataset.price || 0);
+                    const name = cb.dataset.service || 'Услуга';
+                    totalGlobal += price;
+
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'summary-item';
+
+                    // Info wrapper
+                    const infoDiv = document.createElement('div');
+                    infoDiv.className = 'summary-item__info'; // Add class for styling if needed
+                    infoDiv.style.flex = '1';
+
+                    const nameEl = document.createElement('div');
+                    nameEl.className = 'summary-item__name';
+                    nameEl.textContent = name;
+
+                    const priceEl = document.createElement('div');
+                    priceEl.className = 'summary-item__price';
+                    priceEl.textContent = formatPrice(price);
+
+                    infoDiv.appendChild(nameEl);
+                    infoDiv.appendChild(priceEl);
+
+                    // Remove Button
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'summary-remove-btn';
+                    removeBtn.innerHTML = '&times;';
+                    removeBtn.title = 'Удалить';
+
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation(); // Prevent bubbling layout issues
+                        cb.checked = false;
+                        cb.dispatchEvent(new Event('change'));
+                    });
+
+                    itemEl.appendChild(infoDiv);
+                    itemEl.appendChild(removeBtn);
+                    globalSummaryList.appendChild(itemEl);
+                });
+            }
         }
 
-        if (globalSummaryList) globalSummaryList.innerHTML = summaryHTML;
         if (globalTotalValue) globalTotalValue.textContent = formatPrice(totalGlobal);
     };
 
