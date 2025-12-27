@@ -360,5 +360,130 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-});
 
+    // --- Service Page Calculator ---
+    const serviceBlocks = document.querySelectorAll('.service-block');
+    const globalSummaryList = document.getElementById('global-summary-list');
+    const globalTotalValue = document.getElementById('global-total-value');
+
+    // Helper to format currency
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat('ru-RU').format(price) + ' ₽';
+    };
+
+    const updateGlobalSummary = () => {
+        const allCheckboxes = document.querySelectorAll('.calc-checkbox:checked');
+        let totalGlobal = 0;
+        let summaryHTML = '';
+
+        if (allCheckboxes.length === 0) {
+            summaryHTML = '<div class="summary-empty">Ничего не выбрано</div>';
+        } else {
+            allCheckboxes.forEach(cb => {
+                const price = parseInt(cb.dataset.price || 0);
+                const name = cb.dataset.service || 'Услуга';
+                totalGlobal += price;
+
+                summaryHTML += `
+                    <div class="summary-item">
+                        <span class="summary-item__name">${name}</span>
+                        <span class="summary-item__price">${formatPrice(price)}</span>
+                    </div>
+                `;
+            });
+        }
+
+        if (globalSummaryList) globalSummaryList.innerHTML = summaryHTML;
+        if (globalTotalValue) globalTotalValue.textContent = formatPrice(totalGlobal);
+    };
+
+    if (serviceBlocks.length > 0) {
+        serviceBlocks.forEach(block => {
+            const checkboxes = block.querySelectorAll('.calc-checkbox');
+            const totalDisplay = block.querySelector('.calc-total__value');
+            const bookBtn = block.querySelector('.calc-book-btn');
+
+            const calculateLocalTotal = () => {
+                let total = 0;
+                checkboxes.forEach(cb => {
+                    if (cb.checked) {
+                        total += parseInt(cb.dataset.price || 0);
+                    }
+                });
+
+                // Update Local Total Text
+                if (total > 0) {
+                    totalDisplay.textContent = `от ${formatPrice(total)}`;
+                    totalDisplay.style.color = 'var(--color-primary)';
+                    bookBtn.removeAttribute('disabled');
+                    bookBtn.textContent = 'Записаться';
+                } else {
+                    totalDisplay.textContent = '0 ₽';
+                    totalDisplay.style.color = 'white';
+                    bookBtn.setAttribute('disabled', 'true');
+                    bookBtn.textContent = 'Выберите услуги';
+                }
+
+                // Update Global
+                updateGlobalSummary();
+            };
+
+            // Event Listeners
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', calculateLocalTotal);
+            });
+
+            // Booking Button Click
+            if (bookBtn) {
+                bookBtn.addEventListener('click', () => {
+                    const selectedServices = [];
+                    checkboxes.forEach(cb => {
+                        if (cb.checked) selectedServices.push(cb.dataset.service);
+                    });
+
+                    // Scroll to booking form
+                    const bookingSection = document.getElementById('booking');
+                    if (bookingSection) {
+                        bookingSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }
+
+            // Init Local
+            calculateLocalTotal();
+        });
+
+        // Init Global
+        updateGlobalSummary();
+    }
+
+    // --- Floating Scroll Buttons ---
+    const scrollNav = document.querySelector('.scroll-nav');
+    const scrollTopBtn = document.getElementById('scrollTop');
+    const scrollBottomBtn = document.getElementById('scrollBottom');
+
+    if (scrollNav && scrollTopBtn && scrollBottomBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollNav.classList.add('visible');
+            } else {
+                scrollNav.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        scrollBottomBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+});
