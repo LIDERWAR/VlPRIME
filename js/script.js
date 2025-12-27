@@ -516,4 +516,152 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Promo Logic from URL ---
+    const handlePromoParams = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const promo = urlParams.get('promo');
+
+        if (!promo) return;
+
+        // 1. Free Diagnostics
+        if (promo === 'free_diagnostics') {
+            // Find input in "service-mechanical" block
+            const targetInput = document.querySelector('input[data-service="Диагностика подвески"]');
+            if (targetInput) {
+                // Apply 100% discount
+                targetInput.dataset.price = "0";
+
+                // Update visual price
+                const label = targetInput.closest('.calc-option');
+                const priceSpan = label.querySelector('.calc-option__price');
+                if (priceSpan) {
+                    priceSpan.textContent = "Бесплатно";
+                    priceSpan.style.color = "var(--color-primary)";
+                    priceSpan.style.fontWeight = "bold";
+                }
+
+                // Auto-select
+                if (!targetInput.checked) {
+                    targetInput.checked = true;
+                    // Trigger calculation
+                    targetInput.dispatchEvent(new Event('change'));
+                }
+            }
+        }
+
+        // 2. Oil Service Discount (15%)
+        else if (promo === 'oil_discount') {
+            const oilInputs = [
+                document.querySelector('input[data-service="Замена масла ДВС"]'),
+                document.querySelector('input[data-service="Замена масляного фильтра"]')
+            ].filter(el => el !== null);
+
+            oilInputs.forEach(input => {
+                // Apply 15% discount
+                const originalPrice = parseInt(input.dataset.price || 0);
+                const newPrice = Math.round(originalPrice * 0.85);
+                input.dataset.price = newPrice.toString();
+
+                // Update visual price with strikethrough
+                const label = input.closest('.calc-option');
+                const priceSpan = label.querySelector('.calc-option__price');
+                if (priceSpan) {
+                    priceSpan.innerHTML = `<span style="text-decoration: line-through; opacity: 0.7; margin-right: 8px;">от ${formatPrice(originalPrice)}</span><span style="color: var(--color-primary);">от ${formatPrice(newPrice)}</span>`;
+                }
+
+                // Auto-select
+                if (!input.checked) {
+                    input.checked = true;
+                    input.dispatchEvent(new Event('change'));
+                }
+            });
+        }
+    };
+
+    // Run after a small delay to ensure DOM is fully ready and scroll is complete
+    setTimeout(handlePromoParams, 100);
+
+    // --- Telegram Form Submission ---
+    const bookingForm = document.querySelector('.booking-form');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = bookingForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = 'Отправка...';
+            submitBtn.disabled = true;
+
+            // 1. Collect Form Data
+            const name = bookingForm.querySelector('input[type="text"]').value;
+            const phone = bookingForm.querySelector('input[type="tel"]').value;
+            const model = bookingForm.querySelector('select').value;
+
+            // 2. Collect Calculator Data
+            const selectedServices = [];
+            let totalPrice = 0;
+            const checkedBoxes = document.querySelectorAll('.calc-checkbox:checked');
+
+            checkedBoxes.forEach(cb => {
+                const serviceName = cb.dataset.service;
+                const servicePrice = parseInt(cb.dataset.price || 0);
+                selectedServices.push(`${serviceName} - ${formatPrice(servicePrice)}`);
+                totalPrice += servicePrice;
+            });
+
+            // 3. Format Message
+            // Use simple formatting for the URL
+            const startLine = `👋 Новая заявка с сайта VL Prime`;
+            const clientLine = `👤 Клиент: ${name}`;
+            const phoneLine = `📱 Телефон: ${phone}`;
+            const carLine = `🚗 Авто: ${model || 'Не выбран'}`;
+            const servicesHeader = `🛠 Услуги:`;
+            const servicesList = selectedServices.length > 0 ? selectedServices.join('\n') : 'Услуги не выбраны';
+            const totalLine = `💰 Итого: ${formatPrice(totalPrice)}`;
+
+            const fullText = `${startLine}\n\n${clientLine}\n${phoneLine}\n${carLine}\n\n${servicesHeader}\n${servicesList}\n\n${totalLine}`;
+
+            // 4. Send to Telegram (Direct Link)
+            // Replace with your Telegram Username (without @) or Phone Number (international format without +)
+            // Example: 'sergey_vl' or '79991234567'
+            // best practice is using username to ensure 'text' parameter works correctly across devices
+            const TARGET_CONTACT = '79266262662';
+
+            /*
+            if (TARGET_CONTACT === 'YOUR_TELEGRAM_USERNAME') {
+                alert('Пожалуйста, настройте TARGET_CONTACT в script.js');
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+                return;
+            }
+            */
+
+            // Encode text for URL
+            const encodedText = encodeURIComponent(fullText);
+            // Important: For phone numbers, t.me requires a '+' prefix (e.g. t.me/+7999...)
+            // If it's a username, the '+' is usually not needed, but we optimized for phone here as per request.
+            // We will strip any existing '+' just in case and add it back to ensure consistency, 
+            // or better yet, just blindly add it if it looks like a number.
+
+            let telegramUrl;
+            if (/^\d+$/.test(TARGET_CONTACT)) {
+                telegramUrl = `https://t.me/+${TARGET_CONTACT}?text=${encodedText}`;
+            } else {
+                telegramUrl = `https://t.me/${TARGET_CONTACT}?text=${encodedText}`;
+            }
+
+            // Open Telegram
+            window.open(telegramUrl, '_blank');
+
+            // Reset form UI
+            submitBtn.textContent = originalBtnText;
+            submitBtn.disabled = false;
+            bookingForm.reset();
+            document.querySelectorAll('.calc-checkbox:checked').forEach(cb => {
+                cb.checked = false;
+                cb.dispatchEvent(new Event('change'));
+            });
+        });
+    }
+
 });

@@ -43,6 +43,8 @@ html {
     font-size: 16px;
     overflow-x: hidden;
     /* Prevent horizontal scroll */
+    scroll-padding-top: 130px;
+    /* Header (80px) + Top Margin (43px) + Gap */
 }
 
 body {
