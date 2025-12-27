@@ -30,6 +30,72 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- Active Link Highlighting ---
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav__link');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -50% 0px', // Trigger when section is in the middle of viewport
+        threshold: 0
+    };
+
+    // Helper: Find link corresponding to current page path
+    const getCurrentPageLink = () => {
+        const currentPath = window.location.pathname;
+        let found = null;
+
+        // Handle "root" / vs index.html normalization
+        const isRoot = currentPath === '/' || currentPath.endsWith('/index.html');
+
+        navLinks.forEach(link => {
+            try {
+                // Use URL object to parse absolute hrefs
+                const url = new URL(link.href);
+
+                // Only consider links without hashes (pure page links)
+                if (url.hash === '') {
+                    if (url.pathname === currentPath) {
+                        found = link;
+                    } else if (isRoot && (url.pathname === '/' || url.pathname.endsWith('/index.html'))) {
+                        found = link; // Match root variations
+                    }
+                }
+            } catch (e) { }
+        });
+        return found;
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // 1. Try to find specific link by Section ID
+                const id = entry.target.getAttribute('id');
+                let activeLink = null;
+
+                if (id) {
+                    activeLink = document.querySelector(`.nav__link[href*="#${id}"]`);
+                }
+
+                // 2. Fallback: If no specific section link found, use Current Page Link
+                // This ensures "Services" stays active on service.html even when scrolling unmapped sections
+                if (!activeLink) {
+                    activeLink = getCurrentPageLink();
+                }
+
+                // 3. Apply Active Class
+                if (activeLink) {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    activeLink.classList.add('active');
+                }
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+
 
     // --- Reviews Slider: Infinite Loop + Drag ---
     const slider = document.querySelector('.reviews__slider');

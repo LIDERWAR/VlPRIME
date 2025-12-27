@@ -236,7 +236,8 @@ img {
     letter-spacing: 1px;
 }
 
-.nav__link:hover {
+.nav__link:hover,
+.nav__link.active {
     color: var(--color-primary);
     transition: color 0.3s ease;
 }
