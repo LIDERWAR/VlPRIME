@@ -734,6 +734,94 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Phone Input Mask (+7) ---
+    const phoneInput = document.querySelector('input[type="tel"]');
+
+    if (phoneInput) {
+        const formatPhoneNumber = (input) => {
+            let value = input.value.replace(/\D/g, ''); // Strip non-digits
+            let formattedValue = '';
+
+            if (!value) {
+                return '';
+            }
+
+            // Handle Russian numbers starting with 7, 8 or 9
+            if (["7", "8", "9"].indexOf(value[0]) > -1) {
+                // If starts with 9, assume it's 79...
+                if (value[0] === '9') value = '7' + value;
+
+                // Force first digit to 7 for consistency
+                let firstDigit = '7'; // or value[0] if we wanted to allow 8
+
+                formattedValue = '+' + firstDigit + ' ';
+
+                if (value.length > 1) {
+                    formattedValue += '(' + value.substring(1, 4);
+                }
+                if (value.length >= 5) {
+                    formattedValue += ') ' + value.substring(4, 7);
+                }
+                if (value.length >= 8) {
+                    formattedValue += '-' + value.substring(7, 9);
+                }
+                if (value.length >= 10) {
+                    formattedValue += '-' + value.substring(9, 11);
+                }
+            } else {
+                // Not a Russian number? Just add +
+                formattedValue = '+' + value.substring(0, 16);
+            }
+
+            return formattedValue;
+        };
+
+        const onPhoneInput = (e) => {
+            const input = e.target;
+            const selectionStart = input.selectionStart;
+            const oldValueLength = input.value.length;
+
+            // Allow backspace to delete normally if it's simpler, 
+            // but strict masking usually re-formats everything.
+            // A simple approach for Vanilla JS is to only format on input excluding deletions potentially
+            // but standard "replace everything" is robust for pasting.
+
+            // Check if deleting (inputType can help in modern browsers, but fallback needed)
+            // e.inputType === 'deleteContentBackward' 
+
+            input.value = formatPhoneNumber(input);
+
+            // Simple cursor fix (not perfect but decent)
+            // If we added characters, move cursor to end usually works for masks
+            // unless editing in middle.
+        };
+
+        const onPhoneKeyDown = (e) => {
+            // Clear input if backspace pressed on empty-looking mask
+            const input = e.target;
+            if (e.key === 'Backspace' && input.value.length <= 4) { // "+7 ("
+                input.value = '';
+            }
+        };
+
+        phoneInput.addEventListener('input', onPhoneInput);
+        phoneInput.addEventListener('keydown', onPhoneKeyDown);
+
+        // Initial placeholder on focus
+        phoneInput.addEventListener('focus', () => {
+            if (!phoneInput.value) {
+                phoneInput.value = '+7 (';
+            }
+        });
+
+        // Clear if empty on blur
+        phoneInput.addEventListener('blur', () => {
+            if (phoneInput.value === '+7 (' || phoneInput.value.length < 3) {
+                phoneInput.value = '';
+            }
+        });
+    }
+
     // --- Main Services Spotlight Effect ---
     const msCards = document.querySelectorAll('.ms-card');
 
