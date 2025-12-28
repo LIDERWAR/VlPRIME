@@ -727,6 +727,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 cb.checked = false;
                 cb.dispatchEvent(new Event('change'));
             });
+            document.querySelectorAll('.calc-checkbox:checked').forEach(cb => {
+                cb.checked = false;
+                cb.dispatchEvent(new Event('change'));
+            });
+        });
+    }
+
+    // --- Main Services Spotlight Effect ---
+    const msCards = document.querySelectorAll('.ms-card');
+
+    if (msCards.length > 0) {
+        msCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+
+                // Optional: Dynamic icon color or subtle parallax could be added here
+            });
         });
     }
 

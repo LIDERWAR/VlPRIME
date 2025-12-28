@@ -567,15 +567,66 @@ img {
 .ms-card {
     background-color: transparent;
     border: 1px solid transparent;
+    /* Fallback */
     padding: 30px;
     border-radius: 4px;
-    /* Minimalistic borders */
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease;
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: 24px;
+
+    /* Spotlight Variables */
+    --mouse-x: 0px;
+    --mouse-y: 0px;
+    --spotlight-color: rgba(236, 97, 35, 0.4);
+}
+
+/* Spotlight Border */
+.ms-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 4px;
+    padding: 1px;
+    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),
+            var(--spotlight-color),
+            transparent 40%);
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+/* Spotlight Inner Glow */
+.ms-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y),
+            rgba(236, 97, 35, 0.06),
+            transparent 40%);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.ms-card:hover::before,
+.ms-card:hover::after {
+    opacity: 1;
 }
 
 .ms-card>* {
@@ -596,8 +647,8 @@ img {
 
 
 .ms-card:hover {
-    border-color: var(--color-primary);
     background-color: rgba(255, 255, 255, 0.02);
+    transform: translateY(-2px);
 }
 
 .ms-card__icon {
@@ -3655,4 +3706,58 @@ img {
     padding: 15px;
     margin-bottom: 15px;
 }
+
+/* =========================================
+   BLOG PAGE STYLES
+   ========================================= */
+
+/* Hero Section Global (see .hero above) */
+
+/* Blog Page Modifiers */
+.hero--blog {
+    height: 50vh;
+    min-height: 400px;
+    padding-top: 150px;
+    /* Adjust padding for centered text appearance */
+    align-items: center;
+    /* Center content vertically */
+    margin-top: 0;
+    /* Background inherited from .hero, but position might need tweak */
+    background-position: center bottom;
+}
+
+/* Blog Specifics */
+
+/* Blog Specifics */
+.blog-filters {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.blog-card__tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: rgba(236, 97, 35, 0.1);
+    color: var(--color-primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .page-hero {
+        height: 250px;
+        margin-top: 60px;
+    }
+
+    .page-hero__title {
+        font-size: 2rem;
+    }
 }

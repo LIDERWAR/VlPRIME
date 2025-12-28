@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог - VL Prime</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header__container">
+            <div class="header__left">
+                <a href="index.html" class="logo">
+                    <img src="assets/icon/logo.svg" alt="VL Prime Logo" class="logo__img">
+                </a>
+                <div class="header__socials">
+                    <a href="https://wa.me/79266262662" class="social-link" aria-label="WhatsApp"
+                        style="--icon-url: url('../assets/icon/social/whatsapp.svg')"></a>
+                    <a href="https://t.me/+79266262662" class="social-link" aria-label="Telegram"
+                        style="--icon-url: url('../assets/icon/social/telegram.svg')"></a>
+                    <a href="tel:+79266262662" class="social-link" aria-label="Phone"
+                        style="--icon-url: url('../assets/icon/social/phone.svg')"></a>
+                </div>
+            </div>
+
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html#hero" class="nav__link">ГЛАВНАЯ</a></li>
+                    <li class="nav__item"><a href="index.html#about" class="nav__link">О НАС</a></li>
+                    <li class="nav__item"><a href="service.html" class="nav__link">УСЛУГИ</a></li>
+                    <li class="nav__item"><a href="index.html#promotions" class="nav__link">АКЦИИ</a></li>
+                    <li class="nav__item"><a href="index.html#prices" class="nav__link">ЦЕНЫ</a></li>
+                    <li class="nav__item"><a href="index.html#cases" class="nav__link">ГАЛЕРЕЯ</a></li>
+                    <li class="nav__item"><a href="#" class="nav__link active">БЛОГ</a></li>
+                    <li class="nav__item"><a href="index.html#contact" class="nav__link">КОНТАКТЫ</a></li>
+                </ul>
+            </nav>
+
+            <button class="burger-menu" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <!-- Page Hero (Reusing .hero from index for consistency) -->
+    <section class="hero hero--blog">
+        <div class="hero__overlay"></div>
+        <div class="container">
+            <div class="hero__content text-center" style="align-items: center; text-align: center; max-width: 100%;">
+                <h1 class="hero__title">НАШ БЛОГ</h1>
+                <p class="hero__subtitle">Новости, полезные советы и обзоры из мира Volvo</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="blog-page section-padding">
+        <div class="container">
+            <!-- Filters -->
+            <div class="blog__categories blog-filters">
+                <button class="blog-category active" data-filter="all">Все</button>
+                <button class="blog-category" data-filter="news">Новости</button>
+                <button class="blog-category" data-filter="tips">Советы</button>
+                <button class="blog-category" data-filter="reviews">Обзоры</button>
+                <button class="blog-category" data-filter="service">Жизнь сервиса</button>
+            </div>
+
+            <!-- Grid -->
+            <div class="blog__grid">
+                <!-- Article 1 -->
+                <article class="blog-card" data-category="tips">
+                    <div class="blog-card__image-box">
+                        <img src="assets/img/blog_new_1.png" alt="Подготовка к зиме" class="blog-card__img">
+                        <div class="blog-card__overlay"></div>
+                        <span class="blog-card__date">24 Окт 2024</span>
+                    </div>
+                    <div class="blog-card__content">
+                        <span class="blog-card__tag">Советы</span>
+                        <h3 class="blog-card__title">Подготовка Volvo к зимнему сезону: полный чек-лист</h3>
+                        <p class="blog-card__text">
+                            Как защитить кузов, проверить аккумулятор, выбрать "незамерзайку" и
+                            что обязательно должно быть в багажнике каждой Volvo этой зимой.
+                        </p>
+                        <a href="#" class="blog-card__link">Читать далее &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="blog-card" data-category="reviews">
+                    <div class="blog-card__image-box">
+                        <img src="assets/img/blog_new_2.png" alt="Ошибки двигателя" class="blog-card__img">
+                        <div class="blog-card__overlay"></div>
+                        <span class="blog-card__date">10 Ноя 2024</span>
+                    </div>
+                    <div class="blog-card__content">
+                        <span class="blog-card__tag">Обзоры</span>
+                        <h3 class="blog-card__title">Топ-5 проблем с двигателями Drive-E</h3>
+                        <p class="blog-card__text">
+                            Детальный разбор типичных неисправностей современных 4-цилиндровых моторов Volvo.
+                            Как предотвратить масложор и проблемы с турбиной.
+                        </p>
+                        <a href="#" class="blog-card__link">Читать далее &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="blog-card" data-category="tips">
+                    <div class="blog-card__image-box">
+                        <img src="assets/img/blog_new_3.png" alt="Масло в АКПП" class="blog-card__img">
+                        <div class="blog-card__overlay"></div>
+                        <span class="blog-card__date">05 Дек 2024</span>
+                    </div>
+                    <div class="blog-card__content">
+                        <span class="blog-card__tag">Советы</span>
+                        <h3 class="blog-card__title">Замена масла в АКПП: полная или частичная?</h3>
+                        <p class="blog-card__text">
+                            Разбираемся в вечном споре. В чем разница, какой интервал замены выбрать
+                            и почему аппаратная замена на стенде – это безопасно.
+                        </p>
+                        <a href="#" class="blog-card__link">Читать далее &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="blog-card" data-category="news">
+                    <div class="blog-card__image-box">
+                        <img src="assets/img/case_26.png" alt="Новое оборудование" class="blog-card__img">
+                        <div class="blog-card__overlay"></div>
+                        <span class="blog-card__date">15 Дек 2024</span>
+                    </div>
+                    <div class="blog-card__content">
+                        <span class="blog-card__tag">Новости</span>
+                        <h3 class="blog-card__title">Мы обновили диагностическое оборудование</h3>
+                        <p class="blog-card__text">
+                            Теперь поиск неисправностей стал еще точнее и быстрее.
+                            Новые сканеры VIDA поддерживают все модели 2023-2024 года.
+                        </p>
+                        <a href="#" class="blog-card__link">Читать далее &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="blog-card" data-category="service">
+                    <div class="blog-card__image-box">
+                        <img src="assets/img/case_27.png" alt="Коллектив" class="blog-card__img">
+                        <div class="blog-card__overlay"></div>
+                        <span class="blog-card__date">20 Дек 2024</span>
+                    </div>
+                    <div class="blog-card__content">
+                        <span class="blog-card__tag">Жизнь сервиса</span>
+                        <h3 class="blog-card__title">Поздравляем с Наступающим! График работы</h3>
+                        <p class="blog-card__text">
+                            Как мы работаем в праздничные дни. Успейте записаться на ТО до каникул,
+                            чтобы встретить Новый год на исправном автомобиле.
+                        </p>
+                        <a href="#" class="blog-card__link">Читать далее &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- Article 6 -->
+                <article class="blog-card" data-category="reviews">
+                    <div class="blog-card__image-box">
+                        <img src="assets/img/case_28.png" alt="Сравнение масел" class="blog-card__img">
+                        <div class="blog-card__overlay"></div>
+                        <span class="blog-card__date">25 Дек 2024</span>
+                    </div>
+                    <div class="blog-card__content">
+                        <span class="blog-card__tag">Обзоры</span>
+                        <h3 class="blog-card__title">Оригинал или аналог: фильтры салона</h3>
+                        <p class="blog-card__text">
+                            Сравниваем оригинальный угольный фильтр Volvo с аналогами от Mann и Mahle.
+                            Стоит ли переплачивать за синюю коробку?
+                        </p>
+                        <a href="#" class="blog-card__link">Читать далее &rarr;</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="main-footer" class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__col footer__col--info">
+                    <a href="index.html" class="footer__logo-link">
+                        <img src="assets/icon/logo.svg" alt="VL Prime" class="footer__logo-img">
+                    </a>
+                    <p class="footer__desc">
+                        Специализированный сервис Volvo в Москве.
+                        Профессиональный ремонт и обслуживание с гарантией качества и соблюдением стандартов
+                        производителя.
+                    </p>
+                </div>
+
+                <div class="footer__col">
+                    <h4 class="footer__title">Навигация</h4>
+                    <ul class="footer__nav">
+                        <li><a href="index.html#services">Услуги</a></li>
+                        <li><a href="index.html#about">О компании</a></li>
+                        <li><a href="#">Блог</a></li>
+                        <li><a href="index.html#contact">Контакты</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__col">
+                    <h4 class="footer__title">Контакты</h4>
+                    <ul class="footer__contacts">
+                        <li>
+                            <a href="tel:+79990000000" class="footer__phone">+7 (999) 000-00-00</a>
+                        </li>
+                        <li class="footer__address">г. Москва, ул. Примерная, д. 1</li>
+                        <li class="footer__worktime">Пн-Вс: 09:00 - 21:00</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <div class="footer__copyright">
+                    &copy; 2024 VL Prime. Все права защищены.
+                </div>
+                <div class="footer__legal">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Согласие на обработку</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
