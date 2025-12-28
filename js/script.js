@@ -752,4 +752,77 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Lightbox Logic ---
+    const setupLightbox = () => {
+        // 1. Create Lightbox Elements
+        const lightbox = document.createElement('div');
+        lightbox.className = 'lightbox';
+
+        const img = document.createElement('img');
+        img.className = 'lightbox__img';
+        img.alt = 'Enlarged Image';
+
+        const closeBtn = document.createElement('div');
+        closeBtn.className = 'lightbox__close';
+        closeBtn.innerHTML = '&times;';
+
+        lightbox.appendChild(img);
+        lightbox.appendChild(closeBtn);
+        document.body.appendChild(lightbox);
+
+        // 2. State
+        let isOpen = false;
+
+        const openLightbox = (src) => {
+            img.src = src;
+            lightbox.style.display = 'flex';
+            // Force reflow for transition
+            lightbox.offsetHeight;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scroll
+            isOpen = true;
+        };
+
+        const closeLightbox = () => {
+            lightbox.classList.remove('active');
+            setTimeout(() => {
+                lightbox.style.display = 'none';
+                img.src = '';
+                document.body.style.overflow = '';
+                isOpen = false;
+            }, 300); // Match transition duration
+        };
+
+        // 3. Event Listeners
+
+        // Triggers: Target all images in article bodies and explicit .zoomable images
+        // We use delegation or just query all existing ones
+        const images = document.querySelectorAll('.article-body img, img.zoomable, .case-images-grid img');
+
+        images.forEach(image => {
+            image.addEventListener('click', (e) => {
+                e.preventDefault(); // In case it's inside a link
+                e.stopPropagation();
+                openLightbox(image.src);
+            });
+        });
+
+        // Close on Click Outside or Close Button
+        lightbox.addEventListener('click', (e) => {
+            if (e.target !== img) {
+                closeLightbox();
+            }
+        });
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (isOpen && e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    };
+
+    // Init Lightbox
+    setupLightbox();
+
 });
