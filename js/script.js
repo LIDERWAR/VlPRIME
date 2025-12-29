@@ -659,9 +659,55 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.disabled = true;
 
             // 1. Collect Form Data
-            const name = bookingForm.querySelector('input[type="text"]').value;
-            const phone = bookingForm.querySelector('input[type="tel"]').value;
-            const model = bookingForm.querySelector('select').value;
+            const nameInput = bookingForm.querySelector('input[type="text"]');
+            const phoneInput = bookingForm.querySelector('input[type="tel"]');
+            const modelSelect = bookingForm.querySelector('select'); // Keeping model optional as requested
+
+            const name = nameInput.value.trim();
+            const phone = phoneInput.value.trim();
+            const model = modelSelect.value;
+
+            // --- Validation Logic ---
+            let isValid = true;
+            let firstInvalidInput = null;
+
+            // Helper to toggle error
+            const toggleError = (input, isError) => {
+                if (isError) {
+                    input.classList.add('form-input--error');
+                    if (!firstInvalidInput) firstInvalidInput = input;
+                } else {
+                    input.classList.remove('form-input--error');
+                }
+            };
+
+            // Clear previous errors first
+            toggleError(nameInput, false);
+            toggleError(phoneInput, false);
+
+            // Check Name
+            if (!name) {
+                isValid = false;
+                toggleError(nameInput, true);
+            }
+
+            // Check Phone
+            if (!phone) {
+                isValid = false;
+                toggleError(phoneInput, true);
+            }
+
+            if (!isValid) {
+                // Focus first invalid element
+                if (firstInvalidInput) firstInvalidInput.focus();
+
+                // Alert as fallback/emphasis
+                alert('Пожалуйста, заполните обязательные поля:\n- Ваше имя\n- Телефон');
+
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+                return;
+            }
 
             // 2. Collect Calculator Data
             const selectedServices = [];
