@@ -567,18 +567,55 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Helper to find scrollable blocks
+        const getBlocks = () => {
+            return Array.from(document.querySelectorAll('section, footer, .service-block'));
+        };
+
+        // Helper to get scroll padding
+        const getScrollPadding = () => {
+            const htmlStyle = window.getComputedStyle(document.documentElement);
+            return parseInt(htmlStyle.scrollPaddingTop) || 0;
+        };
+
         scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            const blocks = getBlocks();
+            const padding = getScrollPadding();
+            const threshold = padding - 5; // Tolerance margin
+
+            // Find the last block whose top is above the threshold
+            let targetBlock = null;
+            // Iterate backwards to find the closest one "above"
+            for (let i = blocks.length - 1; i >= 0; i--) {
+                const rect = blocks[i].getBoundingClientRect();
+                if (rect.top < threshold) {
+                    targetBlock = blocks[i];
+                    break;
+                }
+            }
+
+            if (targetBlock) {
+                targetBlock.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                // If nothing found (e.g., at very top), ensure we are at 0
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         });
 
         scrollBottomBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: document.body.scrollHeight,
-                behavior: 'smooth'
+            const blocks = getBlocks();
+            const padding = getScrollPadding();
+            const threshold = padding + 5; // Tolerance margin
+
+            // Find the first block whose top is below the threshold
+            const targetBlock = blocks.find(block => {
+                const rect = block.getBoundingClientRect();
+                return rect.top > threshold;
             });
+
+            if (targetBlock) {
+                targetBlock.scrollIntoView({ behavior: 'smooth' });
+            }
         });
     }
 

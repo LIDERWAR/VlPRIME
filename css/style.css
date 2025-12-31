@@ -3924,34 +3924,25 @@ img {
 .article-body img:hover {
     transform: scale(1.01);
     filter: brightness(1.05);
-}/ *   - - -   F o r m   V a l i d a t i o n   - - -   * /  
- . f o r m - i n p u t - - e r r o r   {  
-         b o r d e r - c o l o r :   # f f 4 d 4 d   ! i m p o r t a n t ;  
-         b o x - s h a d o w :   0   0   0   3 p x   r g b a ( 2 5 5 ,   7 7 ,   7 7 ,   0 . 2 )   ! i m p o r t a n t ;  
-         a n i m a t i o n :   s h a k e   0 . 4 s   c u b i c - b e z i e r ( . 3 6 ,   . 0 7 ,   . 1 9 ,   . 9 7 )   b o t h ;  
- }  
-  
- @ k e y f r a m e s   s h a k e   {  
-  
-         1 0 % ,  
-         9 0 %   {  
-                 t r a n s f o r m :   t r a n s l a t e 3 d ( - 1 p x ,   0 ,   0 ) ;  
-         }  
-  
-         2 0 % ,  
-         8 0 %   {  
-                 t r a n s f o r m :   t r a n s l a t e 3 d ( 2 p x ,   0 ,   0 ) ;  
-         }  
-  
-         3 0 % ,  
-         5 0 % ,  
-         7 0 %   {  
-                 t r a n s f o r m :   t r a n s l a t e 3 d ( - 4 p x ,   0 ,   0 ) ;  
-         }  
-  
-         4 0 % ,  
-         6 0 %   {  
-                 t r a n s f o r m :   t r a n s l a t e 3 d ( 4 p x ,   0 ,   0 ) ;  
-         }  
- }  
- 
+}
+
+/* --- Mobile Layout Adjustments (Gap Fix) --- */
+@media (max-width: 768px) {
+
+    /* Remove the 43px top gap for the header on mobile */
+    .header {
+        top: 0;
+        background-color: rgba(11, 11, 13, 0.95);
+        /* Ensure solid-ish bg on mobile */
+    }
+
+    /* Adjust Hero padding since header is now at top */
+    .hero {
+        padding-top: 140px;
+        /* Reduced from 300px for mobile */
+        min-height: auto;
+        /* Let content dictate height or keepvh */
+        height: 100vh;
+        /* Keep full screen feel */
+    }
+}
