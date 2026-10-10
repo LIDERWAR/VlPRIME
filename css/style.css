@@ -423,10 +423,6 @@ img {
     text-align: center;
 }
 
-.services__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
 .services.section-padding {
     padding-top: 80px;
     padding-bottom: 50px;
@@ -2438,6 +2434,7 @@ img {
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     margin-bottom: 50px;
+    width: 100%;
 }
 
 .blog-card {
@@ -3709,18 +3706,60 @@ img {
 
 /* Blog Page Modifiers */
 .hero--blog {
-    height: 70vh;
-    min-height: 400px;
+    height: auto;
+    min-height: 250px;
     padding-top: 150px;
-    /* Adjust padding for centered text appearance */
+    padding-bottom: 55px;
+    display: flex;
     align-items: center;
-    /* Center content vertically */
+    justify-content: center;
     margin-top: 0;
-    /* Background inherited from .hero, but position might need tweak */
-    background-position: center;
+    background-position: center 35%;
+    background-size: cover;
+    position: relative;
 }
 
-/* Blog Specifics */
+.hero--blog .hero__overlay {
+    background: linear-gradient(180deg, rgba(11, 11, 13, 0.88) 0%, rgba(11, 11, 13, 0.96) 100%);
+}
+
+.hero--blog .hero__content {
+    align-items: center;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    gap: 16px;
+}
+
+.hero--blog .hero__title {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
+
+.hero--blog .hero__title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: var(--color-primary);
+    border-radius: 2px;
+    margin: 16px auto 0;
+}
+
+.hero--blog .hero__subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.blog-page.section-padding {
+    padding-top: 50px;
+    padding-bottom: 80px;
+}
 
 /* Blog Specifics */
 .blog-filters {
@@ -3746,6 +3785,25 @@ img {
 
 /* Mobile Adjustments */
 @media (max-width: 768px) {
+    .hero--blog {
+        min-height: 200px;
+        padding-top: 120px;
+        padding-bottom: 35px;
+    }
+
+    .hero--blog .hero__title {
+        font-size: 2rem;
+    }
+
+    .hero--blog .hero__subtitle {
+        font-size: 0.95rem;
+    }
+
+    .blog-page.section-padding {
+        padding-top: 35px;
+        padding-bottom: 50px;
+    }
+
     .page-hero {
         height: 250px;
         margin-top: 60px;
