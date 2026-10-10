@@ -106,17 +106,14 @@ img {
 
 .btn {
     display: inline-flex;
-    /* Use flex for perfect centering with fixed height */
     justify-content: center;
     align-items: center;
-    padding: 10px 40px;
-    /* User requested */
-    width: 221px;
-    /* User requested */
-    height: 56px;
-    /* User requested */
+    padding: 12px 32px;
+    min-width: 200px;
+    width: auto;
+    min-height: 54px;
+    height: auto;
     border-radius: 16px;
-    /* User requested */
 
     font-family: var(--font-btn);
     font-weight: 600;
@@ -126,6 +123,9 @@ img {
     border: none;
     font-size: 1rem;
     letter-spacing: 0.5px;
+    text-decoration: none;
+    line-height: 1.3;
+    box-sizing: border-box;
 }
 
 .btn--primary {
@@ -3839,6 +3839,47 @@ img {
     border-radius: 0 8px 8px 0;
     font-style: italic;
     color: var(--color-text-main);
+}
+
+/* --- Article CTA Box --- */
+.article-cta {
+    background: var(--color-surface);
+    border: 1px solid var(--color-primary);
+    border-radius: 16px;
+    padding: 36px 28px;
+    margin: 40px 0;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.article-cta h3 {
+    color: var(--color-text-main);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.article-cta p {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.article-cta .btn {
+    width: auto;
+    min-width: 240px;
+    max-width: 100%;
+    min-height: 52px;
+    height: auto;
+    padding: 14px 36px;
+    font-size: 1rem;
+    white-space: normal;
+    text-decoration: none;
+    line-height: 1.3;
 }
 
 .article-footer {
