@@ -134,8 +134,9 @@
 			<h3 class="modal__title">Спасибо за заявку!</h3>
 			<p class="modal__desc">Мы получили ваши данные. Мастер-приемщик свяжется с вами в течение 10 минут.</p>
 			<div class="modal__success-actions">
-				<button type="button" class="btn btn--secondary" data-modal-close>Закрыть</button>
-				<a href="https://t.me/+79266262662" target="_blank" class="btn btn--primary">Написать в Telegram</a>
+				<a id="modalTgLink" href="https://t.me/+79096249289" target="_blank" class="btn btn--primary">Написать в Telegram (+7 909 624-92-89)</a>
+				<a id="modalWaLink" href="https://wa.me/79096249289" target="_blank" class="btn btn--secondary">Написать в WhatsApp</a>
+				<button type="button" class="btn btn--secondary" data-modal-close>Закрыть окно</button>
 			</div>
 		</div>
 	</div>

@@ -884,6 +884,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.warn('AJAX error:', err);
             }
 
+            // Format message and dynamic links for target phone +79096249289
+            const targetPhone = '79096249289';
+            const messageLines = [
+                '👋 Новая заявка на обслуживание VL Prime',
+                '',
+                `👤 Клиент: ${name}`,
+                `📱 Телефон: ${phone}`,
+                `🚗 Автомобиль: Volvo ${model || 'Не указана'}`
+            ];
+            if (selectedServices.length > 0) {
+                messageLines.push('', '🛠 Выбранные услуги:', ...selectedServices);
+            }
+            const encodedMsg = encodeURIComponent(messageLines.join('\n'));
+            const tgUrl = `https://t.me/+${targetPhone}?text=${encodedMsg}`;
+            const waUrl = `https://wa.me/${targetPhone}?text=${encodedMsg}`;
+
+            const tgBtn = document.getElementById('modalTgLink');
+            if (tgBtn) tgBtn.href = tgUrl;
+            const waBtn = document.getElementById('modalWaLink');
+            if (waBtn) waBtn.href = waUrl;
+
             // Success Handling:
             if (form.closest('#bookingModal')) {
                 if (modalFormContainer) modalFormContainer.style.display = 'none';
@@ -892,6 +913,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 openBookingModal();
                 if (modalFormContainer) modalFormContainer.style.display = 'none';
                 if (modalSuccessContainer) modalSuccessContainer.style.display = 'block';
+            }
+
+            // Also open Telegram in new tab to directly deliver to +79096249289
+            try {
+                window.open(tgUrl, '_blank');
+            } catch (e) {
+                console.log('Popup blocked, available via button:', e);
             }
 
             form.reset();

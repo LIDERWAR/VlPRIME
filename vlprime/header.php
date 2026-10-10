@@ -84,9 +84,9 @@
 							<?php endif;
 						endwhile;
 					else: ?>
-						<a href="https://wa.me/79266262662" class="social-link" aria-label="WhatsApp"
+						<a href="https://wa.me/79096249289" class="social-link" aria-label="WhatsApp"
 							style="--icon-url: url('<?php echo get_template_directory_uri(); ?>/assets/icon/social/whatsapp.svg')"></a>
-						<a href="https://t.me/+79266262662" class="social-link" aria-label="Telegram"
+						<a href="https://t.me/+79096249289" class="social-link" aria-label="Telegram"
 							style="--icon-url: url('<?php echo get_template_directory_uri(); ?>/assets/icon/social/telegram.svg')"></a>
 					<?php endif; ?>
 				</div>
