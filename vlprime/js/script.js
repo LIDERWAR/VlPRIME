@@ -691,6 +691,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const openBookingModal = () => {
         if (!bookingModal) return;
+        bookingModal.style.display = 'flex';
+        void bookingModal.offsetWidth;
         bookingModal.classList.add('active');
         bookingModal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
@@ -707,6 +709,11 @@ document.addEventListener('DOMContentLoaded', () => {
         bookingModal.classList.remove('active');
         bookingModal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+        setTimeout(() => {
+            if (!bookingModal.classList.contains('active')) {
+                bookingModal.style.display = 'none';
+            }
+        }, 300);
     };
 
     // Open triggers: data-modal-open="booking" and links to #booking without target on page

@@ -103,10 +103,15 @@ add_action('after_setup_theme', 'vlprime_content_width', 0);
  */
 function vlprime_scripts()
 {
-	wp_enqueue_style('vlprime-style', get_stylesheet_uri(), array(), _S_VERSION);
-	wp_enqueue_style('vlprime-style-main', get_template_directory_uri() . '/css/style.css', array(), _S_VERSION);
+	$css_file = get_template_directory() . '/css/style.css';
+	$js_file = get_template_directory() . '/js/script.js';
+	$css_ver = file_exists($css_file) ? filemtime($css_file) : _S_VERSION;
+	$js_ver = file_exists($js_file) ? filemtime($js_file) : _S_VERSION;
+
+	wp_enqueue_style('vlprime-style', get_stylesheet_uri(), array(), $css_ver);
+	wp_enqueue_style('vlprime-style-main', get_template_directory_uri() . '/css/style.css', array(), $css_ver);
 	wp_enqueue_style('vlprime-style-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@600&display=swap', array(), _S_VERSION);
-	wp_enqueue_script('vlprime-script-main', get_template_directory_uri() . '/js/script.js', array(), _S_VERSION, true);
+	wp_enqueue_script('vlprime-script-main', get_template_directory_uri() . '/js/script.js', array(), $js_ver, true);
 
 	wp_localize_script('vlprime-script-main', 'vlprime_ajax', array(
 		'url' => admin_url('admin-ajax.php'),
