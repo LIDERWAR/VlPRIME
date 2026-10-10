@@ -427,150 +427,117 @@ img {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
-    margin-top: 60px;
+.services.section-padding {
+    padding-top: 80px;
+    padding-bottom: 50px;
+}
+
+.main-services.section-padding {
+    padding-top: 50px;
+    padding-bottom: 80px;
+}
+
+.services__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 48px;
 }
 
 .service-card {
     background-color: var(--color-surface);
-    padding: 32px 30px;
-    border-radius: 12px;
-    border: 1px solid var(--color-border);
-    transition: all 0.3s ease;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 36px 30px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.35s ease;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     position: relative;
     overflow: hidden;
-    gap: 24px;
+    gap: 20px;
+    min-height: 290px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
     border-color: var(--color-primary);
-    box-shadow: 0 10px 30px rgba(236, 97, 35, 0.1);
+    box-shadow: 0 16px 36px rgba(236, 97, 35, 0.2);
 }
 
-.service-card__icon-box {
-    width: 70px;
-    height: 70px;
-    background-color: rgba(236, 97, 35, 0.1);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0;
-    color: var(--color-primary);
-    transition: all 0.3s ease;
-}
-
-.service-card:hover .service-card__icon-box {
-    background-color: var(--color-primary);
-    color: white;
-}
-
-.service-card__title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0;
-    color: white;
-}
-
-.service-card__text {
-    font-size: 1rem;
-    color: var(--color-text-muted);
-    z-index: 2;
-    /* Ensure text is above overlay */
-    position: relative;
-    line-height: 1.6;
-}
-
-/* Ensure content is above overlay and visible for the image-background cards */
-.service-card--private .service-card__title,
-.service-card--private .service-card__text,
-.service-card--private .service-card__icon-box,
-.service-card--corporate .service-card__title,
-.service-card--corporate .service-card__text,
-.service-card--corporate .service-card__icon-box,
-.service-card--postwarranty .service-card__title,
-.service-card--postwarranty .service-card__text,
-.service-card--postwarranty .service-card__icon-box {
-    position: relative;
-    z-index: 2;
-    color: white;
-    /* Force white text */
-}
-
-/* Specific icon adjustment for these dark cards if needed */
-.service-card--private .service-card__icon-box,
-.service-card--corporate .service-card__icon-box,
-.service-card--postwarranty .service-card__icon-box {
-    background-color: rgba(236, 97, 35, 0.2);
-    /* Slightly more visible background for icon box */
-    color: var(--color-primary);
-    /* Keep icon primary color or make white? User said "icons poorly visible". Let's try white or bright primary. */
-}
-
-/* On hover, ensure they stay visible */
-.service-card--private:hover .service-card__icon-box,
-.service-card--corporate:hover .service-card__icon-box,
-.service-card--postwarranty:hover .service-card__icon-box {
-    background-color: var(--color-primary);
-    color: white;
-}
-
-/* Service Card Backgrounds (Added per user request) */
-.service-card--private {
-    background-image: url('../assets/img/audience_1.png');
-    background-size: cover;
-    background-position: center;
-    background-color: var(--color-surface);
-    /* Fallback */
-    background-clip: padding-box;
-    border-color: transparent;
-    /* Transparent border by default unless hovered */
-}
-
-.service-card--corporate {
-    background-image: url('../assets/img/audience_2.png');
-    background-size: cover;
-    background-position: center;
-    background-color: var(--color-surface);
-    /* Fallback */
-    background-clip: padding-box;
-    border-color: transparent;
-}
-
-.service-card--postwarranty {
-    background-image: url('../assets/img/audience_3.png');
-    background-size: cover;
-    background-position: center;
-    background-color: var(--color-surface);
-    /* Fallback */
-    background-clip: padding-box;
-    border-color: transparent;
-}
-
-/* Overlay for these specific cards to ensure readability */
-/* Overlay for these specific cards to ensure readability */
-.service-card--private::before,
-.service-card--corporate::before,
-.service-card--postwarranty::before {
+/* Dark gradient overlay for readability on all cards */
+.service-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Darkened by approx 10% (0.6 -> 0.7 opacity) matching ms-card */
-    background: linear-gradient(180deg, rgba(11, 11, 13, 0.7) 0%, rgba(11, 11, 13, 0.98) 100%);
+    background: linear-gradient(180deg, rgba(11, 11, 13, 0.72) 0%, rgba(11, 11, 13, 0.96) 100%);
     z-index: 1;
-    transition: opacity 0.3s ease;
+    transition: background 0.35s ease;
 }
 
-.service-card--private:hover::before,
-.service-card--corporate:hover::before,
-.service-card--postwarranty:hover::before {
-    background: linear-gradient(180deg, rgba(11, 11, 13, 0.4) 0%, rgba(11, 11, 13, 0.9) 100%);
+.service-card:hover::before {
+    background: linear-gradient(180deg, rgba(11, 11, 13, 0.5) 0%, rgba(11, 11, 13, 0.88) 100%);
+}
+
+.service-card__icon-box {
+    width: 64px;
+    height: 64px;
+    background-color: rgba(236, 97, 35, 0.15);
+    border: 1px solid rgba(236, 97, 35, 0.35);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.service-card:hover .service-card__icon-box {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.service-card__title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    color: #ffffff;
+    position: relative;
+    z-index: 2;
+    line-height: 1.3;
+}
+
+.service-card__text {
+    font-size: 0.95rem;
+    color: #d8d8de;
+    position: relative;
+    z-index: 2;
+    line-height: 1.65;
+    margin-bottom: 0;
+}
+
+/* Fallback backgrounds for static HTML */
+.service-card--private {
+    background-image: url('../assets/img/audience_1.png');
+}
+
+.service-card--corporate {
+    background-image: url('../assets/img/audience_2.png');
+}
+
+.service-card--postwarranty {
+    background-image: url('../assets/img/audience_3.png');
 }
 
 

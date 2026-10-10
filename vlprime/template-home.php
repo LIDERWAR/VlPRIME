@@ -52,7 +52,7 @@ get_header();
             <span class="section-overhead"><?php the_field('services_subtitle'); ?></span>
             <h2 class="section-title"><?php the_field('services_title'); ?></h2>
         </div>
-        <div class="services__grid castom-grid">
+        <div class="services__grid">
             <!-- Service Card  -->
             <?php
             if (
