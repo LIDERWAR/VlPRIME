@@ -17,7 +17,7 @@ get_header();
 <section class="article-page section-padding">
 	<div class="container">
 		<div class="article-content">
-			<!-- <a href="" class="back-link">&larr; Назад к статьям</a> -->
+			<a href="<?php echo esc_url(get_category_link(get_category_by_slug('blog'))); ?>" class="back-link">&larr; Назад к статьям</a>
 
 			<header class="article-header">
 				<div class="article-meta">
@@ -26,7 +26,7 @@ get_header();
 					</span>
 					<span class="article-date"><?php echo get_the_date(); ?></span>
 				</div>
-				<h2 class="article-title"><?php the_title(); ?></h2>
+				<h1 class="article-title"><?php the_title(); ?></h1>
 			</header>
 
 			<div class="article-body">
