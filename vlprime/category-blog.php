@@ -31,7 +31,7 @@ get_header();
             <?php
             // задаем нужные нам критерии выборки данных из БД
             $args = array(
-                'posts_per_page' => 5,
+                'posts_per_page' => 12,
                 'category_name' => 'blog',
             );
 
