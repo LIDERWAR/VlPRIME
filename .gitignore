@@ -30,3 +30,9 @@ build/
 
 # Project specific
 referens/
+backup/
+*.zip
+*.png.bak
+Screenshot_*.png
+screenshot.png
+Group 6.png

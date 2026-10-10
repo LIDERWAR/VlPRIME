@@ -2016,6 +2016,15 @@ img {
         border-bottom: 1px solid var(--color-border);
     }
 
+    .nav.active {
+        display: flex;
+    }
+
+    .nav__list {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .logo {
         font-size: 1.3rem;
     }
@@ -2056,15 +2065,6 @@ img {
 @media (max-width: 768px) {
     .hero__title {
         font-size: 2rem;
-    }
-
-    .nav.active {
-        display: flex;
-    }
-
-    .nav__list {
-        flex-direction: column;
-        align-items: center;
     }
 
     .about__inner {
