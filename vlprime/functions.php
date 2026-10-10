@@ -108,11 +108,51 @@ function vlprime_scripts()
 	wp_enqueue_style('vlprime-style-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@600&display=swap', array(), _S_VERSION);
 	wp_enqueue_script('vlprime-script-main', get_template_directory_uri() . '/js/script.js', array(), _S_VERSION, true);
 
+	wp_localize_script('vlprime-script-main', 'vlprime_ajax', array(
+		'url' => admin_url('admin-ajax.php'),
+		'nonce' => wp_create_nonce('vlprime_booking_nonce')
+	));
+
 	if (is_singular() && comments_open() && get_option('thread_comments')) {
 		wp_enqueue_script('comment-reply');
 	}
 }
 add_action('wp_enqueue_scripts', 'vlprime_scripts');
+
+/**
+ * AJAX Handler for Booking Forms
+ */
+function vlprime_ajax_booking_handler()
+{
+	$name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
+	$phone = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '';
+	$model = isset($_POST['model']) ? sanitize_text_field($_POST['model']) : 'Не указана';
+	$services = isset($_POST['services']) ? sanitize_textarea_field($_POST['services']) : '';
+
+	if (empty($name) || empty($phone)) {
+		wp_send_json_error(array('message' => 'Пожалуйста, заполните Имя и Телефон'));
+	}
+
+	$admin_email = get_option('admin_email');
+	$subject = 'Новая заявка VL Prime: ' . $name . ' (' . $phone . ')';
+	$body = "Получена новая заявка с сайта vlprime.ru\n\n";
+	$body .= "Имя: " . $name . "\n";
+	$body .= "Телефон: " . $phone . "\n";
+	$body .= "Модель: Volvo " . $model . "\n";
+	if (!empty($services)) {
+		$body .= "Выбранные услуги:\n" . $services . "\n";
+	}
+	$body .= "Дата и время: " . current_time('d.m.Y H:i') . "\n";
+
+	$headers = array('Content-Type: text/plain; charset=UTF-8');
+	@wp_mail($admin_email, $subject, $body, $headers);
+
+	wp_send_json_success(array(
+		'message' => 'Заявка успешно принята! Мы перезвоним вам в течение 10 минут.'
+	));
+}
+add_action('wp_ajax_vlprime_booking', 'vlprime_ajax_booking_handler');
+add_action('wp_ajax_nopriv_vlprime_booking', 'vlprime_ajax_booking_handler');
 
 
 if (function_exists('acf_add_options_page')) {

@@ -86,7 +86,60 @@
 	</button>
 </div>
 
+<!-- Modal Booking Window -->
+<div id="bookingModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
+	<div class="modal__overlay" data-modal-close></div>
+	<div class="modal__dialog">
+		<button class="modal__close" data-modal-close aria-label="Закрыть окно">&times;</button>
+		<div class="modal__content" id="modalFormContainer">
+			<span class="modal__overhead">ЗАПИСЬ НА СЕРВИС</span>
+			<h3 class="modal__title" id="modalTitle">Записаться на диагностику и ремонт</h3>
+			<p class="modal__desc">Оставьте номер телефона, и мастер-приемщик свяжется с вами в течение 10 минут для согласования времени визита.</p>
+			
+			<form class="modal__form booking-form" data-form-type="ajax">
+				<input type="hidden" name="action" value="vlprime_booking">
+				<div class="modal__form-group">
+					<input type="text" name="name" placeholder="Ваше имя *" class="form-input" required>
+				</div>
+				<div class="modal__form-group">
+					<input type="tel" name="phone" placeholder="+7 (___) ___-__-__ *" class="form-input" required>
+				</div>
+				<div class="modal__form-group">
+					<select name="model" class="form-select">
+						<option value="" disabled selected>Выберите модель Volvo</option>
+						<option value="XC90">Volvo XC90</option>
+						<option value="XC70">Volvo XC70</option>
+						<option value="XC60">Volvo XC60</option>
+						<option value="XC40">Volvo XC40</option>
+						<option value="S90">Volvo S90</option>
+						<option value="S80">Volvo S80</option>
+						<option value="S60">Volvo S60</option>
+						<option value="V90">Volvo V90</option>
+						<option value="V60">Volvo V60</option>
+						<option value="Other">Другая модель</option>
+					</select>
+				</div>
+				<button type="submit" class="btn btn--primary modal__submit-btn">Отправить заявку</button>
+				<p class="form-policy">Нажимая кнопку, вы соглашаетесь с условиями обработки данных</p>
+			</form>
+		</div>
 
+		<div class="modal__success" id="modalSuccessContainer" style="display: none;">
+			<div class="modal__success-icon">
+				<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+					<polyline points="22 4 12 14.01 9 11.01"></polyline>
+				</svg>
+			</div>
+			<h3 class="modal__title">Спасибо за заявку!</h3>
+			<p class="modal__desc">Мы получили ваши данные. Мастер-приемщик свяжется с вами в течение 10 минут.</p>
+			<div class="modal__success-actions">
+				<button type="button" class="btn btn--secondary" data-modal-close>Закрыть</button>
+				<a href="https://t.me/+79266262662" target="_blank" class="btn btn--primary">Написать в Telegram</a>
+			</div>
+		</div>
+	</div>
+</div>
 
 <?php wp_footer(); ?>
 

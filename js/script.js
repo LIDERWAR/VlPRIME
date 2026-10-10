@@ -684,32 +684,136 @@ document.addEventListener('DOMContentLoaded', () => {
     // Run after a small delay to ensure DOM is fully ready and scroll is complete
     setTimeout(handlePromoParams, 100);
 
-    // --- Telegram Form Submission ---
-    const bookingForm = document.querySelector('.booking-form');
-    if (bookingForm) {
-        bookingForm.addEventListener('submit', async (e) => {
+    // --- Booking Modal Logic ---
+    const bookingModal = document.getElementById('bookingModal');
+    const modalFormContainer = document.getElementById('modalFormContainer');
+    const modalSuccessContainer = document.getElementById('modalSuccessContainer');
+
+    const openBookingModal = () => {
+        if (!bookingModal) return;
+        bookingModal.classList.add('active');
+        bookingModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+
+        if (modalFormContainer) modalFormContainer.style.display = 'block';
+        if (modalSuccessContainer) modalSuccessContainer.style.display = 'none';
+
+        const firstInput = bookingModal.querySelector('input[type="text"]');
+        if (firstInput) setTimeout(() => firstInput.focus(), 150);
+    };
+
+    const closeBookingModal = () => {
+        if (!bookingModal) return;
+        bookingModal.classList.remove('active');
+        bookingModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    };
+
+    // Open triggers: data-modal-open="booking" and links to #booking without target on page
+    document.querySelectorAll('[data-modal-open="booking"], a[href="#booking"], a[href*="/service/#booking"]').forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            const hasInlineBooking = document.querySelector('.services-booking .booking-form, section#booking .booking-form');
+            const isServicePage = window.location.pathname.includes('/service');
+            
+            if (!hasInlineBooking || trigger.hasAttribute('data-modal-open') || !isServicePage) {
+                e.preventDefault();
+                openBookingModal();
+            }
+        });
+    });
+
+    // Close triggers
+    document.querySelectorAll('[data-modal-close]').forEach(btn => {
+        btn.addEventListener('click', closeBookingModal);
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && bookingModal && bookingModal.classList.contains('active')) {
+            closeBookingModal();
+        }
+    });
+
+    // --- Phone Input Mask (+7) for ALL phone inputs ---
+    const phoneInputs = document.querySelectorAll('input[type="tel"]');
+
+    const formatPhoneNumber = (input) => {
+        let value = input.value.replace(/\D/g, '');
+        let formattedValue = '';
+        if (!value) return '';
+
+        if (["7", "8", "9"].indexOf(value[0]) > -1) {
+            if (value[0] === '9') value = '7' + value;
+            formattedValue = '+7 ';
+            if (value.length > 1) {
+                formattedValue += '(' + value.substring(1, 4);
+            }
+            if (value.length >= 5) {
+                formattedValue += ') ' + value.substring(4, 7);
+            }
+            if (value.length >= 8) {
+                formattedValue += '-' + value.substring(7, 9);
+            }
+            if (value.length >= 10) {
+                formattedValue += '-' + value.substring(9, 11);
+            }
+        } else {
+            formattedValue = '+' + value.substring(0, 16);
+        }
+        return formattedValue;
+    };
+
+    phoneInputs.forEach(phoneInput => {
+        phoneInput.addEventListener('input', () => {
+            phoneInput.value = formatPhoneNumber(phoneInput);
+        });
+
+        phoneInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && phoneInput.value.length <= 4) {
+                phoneInput.value = '';
+            }
+        });
+
+        phoneInput.addEventListener('focus', () => {
+            if (!phoneInput.value) {
+                phoneInput.value = '+7 (';
+            }
+        });
+
+        phoneInput.addEventListener('blur', () => {
+            if (phoneInput.value === '+7 (' || phoneInput.value.length < 3) {
+                phoneInput.value = '';
+            }
+        });
+    });
+
+    // --- Universal AJAX Booking Form Handler ---
+    const bookingForms = document.querySelectorAll('.booking-form');
+
+    bookingForms.forEach(form => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const submitBtn = bookingForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.textContent;
-            submitBtn.textContent = 'Отправка...';
-            submitBtn.disabled = true;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn ? submitBtn.textContent : 'Отправить заявку';
+            if (submitBtn) {
+                submitBtn.textContent = 'Отправка...';
+                submitBtn.disabled = true;
+            }
 
-            // 1. Collect Form Data
-            const nameInput = bookingForm.querySelector('input[type="text"]');
-            const phoneInput = bookingForm.querySelector('input[type="tel"]');
-            const modelSelect = bookingForm.querySelector('select'); // Keeping model optional as requested
+            const nameInput = form.querySelector('input[type="text"]');
+            const phoneInput = form.querySelector('input[type="tel"]');
+            const modelSelect = form.querySelector('select');
 
-            const name = nameInput.value.trim();
-            const phone = phoneInput.value.trim();
-            const model = modelSelect.value;
+            const name = nameInput ? nameInput.value.trim() : '';
+            const phone = phoneInput ? phoneInput.value.trim() : '';
+            const model = modelSelect ? modelSelect.value : '';
 
-            // --- Validation Logic ---
+            // Validation
             let isValid = true;
             let firstInvalidInput = null;
 
-            // Helper to toggle error
             const toggleError = (input, isError) => {
+                if (!input) return;
                 if (isError) {
                     input.classList.add('form-input--error');
                     if (!firstInvalidInput) firstInvalidInput = input;
@@ -718,192 +822,78 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             };
 
-            // Clear previous errors first
             toggleError(nameInput, false);
             toggleError(phoneInput, false);
 
-            // Check Name
             if (!name) {
                 isValid = false;
                 toggleError(nameInput, true);
             }
-
-            // Check Phone
-            if (!phone) {
+            if (!phone || phone.replace(/\D/g, '').length < 11) {
                 isValid = false;
                 toggleError(phoneInput, true);
             }
 
             if (!isValid) {
-                // Focus first invalid element
                 if (firstInvalidInput) firstInvalidInput.focus();
-
-                // Alert as fallback/emphasis
-                alert('Пожалуйста, заполните обязательные поля:\n- Ваше имя\n- Телефон');
-
-                submitBtn.textContent = originalBtnText;
-                submitBtn.disabled = false;
+                alert('Пожалуйста, укажите имя и полный номер телефона для связи.');
+                if (submitBtn) {
+                    submitBtn.textContent = originalBtnText;
+                    submitBtn.disabled = false;
+                }
                 return;
             }
 
-            // 2. Collect Calculator Data
+            // Collect Calculator Data if present
             const selectedServices = [];
-            let totalPrice = 0;
             const checkedBoxes = document.querySelectorAll('.calc-checkbox:checked');
-
             checkedBoxes.forEach(cb => {
-                const serviceName = cb.dataset.service;
-                const servicePrice = parseInt(cb.dataset.price || 0);
-                selectedServices.push(`${serviceName} - ${formatPrice(servicePrice)}`);
-                totalPrice += servicePrice;
+                const sName = cb.dataset.service;
+                const sPrice = parseInt(cb.dataset.price || 0);
+                selectedServices.push(`${sName} - ${formatPrice(sPrice)}`);
             });
 
-            // 3. Format Message
-            // Use simple formatting for the URL
-            const startLine = `👋 Новая заявка с сайта VL Prime`;
-            const clientLine = `👤 Клиент: ${name}`;
-            const phoneLine = `📱 Телефон: ${phone}`;
-            const carLine = `🚗 Авто: ${model || 'Не выбран'}`;
-            const servicesHeader = `🛠 Услуги:`;
-            const servicesList = selectedServices.length > 0 ? selectedServices.join('\n') : 'Услуги не выбраны';
-            const totalLine = `💰 Итого: ${formatPrice(totalPrice)}`;
+            // Prepare Data for AJAX
+            const formData = new FormData();
+            formData.append('action', 'vlprime_booking');
+            formData.append('name', name);
+            formData.append('phone', phone);
+            formData.append('model', model || 'Не указана');
+            if (selectedServices.length > 0) {
+                formData.append('services', selectedServices.join('\n'));
+            }
+            if (window.vlprime_ajax && window.vlprime_ajax.nonce) {
+                formData.append('nonce', window.vlprime_ajax.nonce);
+            }
 
-            const fullText = `${startLine}\n\n${clientLine}\n${phoneLine}\n${carLine}\n\n${servicesHeader}\n${servicesList}\n\n${totalLine}`;
+            try {
+                if (window.vlprime_ajax && window.vlprime_ajax.url) {
+                    await fetch(window.vlprime_ajax.url, {
+                        method: 'POST',
+                        body: formData
+                    });
+                }
+            } catch (err) {
+                console.warn('AJAX error:', err);
+            }
 
-            // 4. Send to Telegram (Direct Link)
-            // Replace with your Telegram Username (without @) or Phone Number (international format without +)
-            // Example: 'sergey_vl' or '79991234567'
-            // best practice is using username to ensure 'text' parameter works correctly across devices
-            const TARGET_CONTACT = '79266262662';
+            // Success Handling:
+            if (form.closest('#bookingModal')) {
+                if (modalFormContainer) modalFormContainer.style.display = 'none';
+                if (modalSuccessContainer) modalSuccessContainer.style.display = 'block';
+            } else {
+                openBookingModal();
+                if (modalFormContainer) modalFormContainer.style.display = 'none';
+                if (modalSuccessContainer) modalSuccessContainer.style.display = 'block';
+            }
 
-            /*
-            if (TARGET_CONTACT === 'YOUR_TELEGRAM_USERNAME') {
-                alert('Пожалуйста, настройте TARGET_CONTACT в script.js');
+            form.reset();
+            if (submitBtn) {
                 submitBtn.textContent = originalBtnText;
                 submitBtn.disabled = false;
-                return;
-            }
-            */
-
-            // Encode text for URL
-            const encodedText = encodeURIComponent(fullText);
-            // Important: For phone numbers, t.me requires a '+' prefix (e.g. t.me/+7999...)
-            // If it's a username, the '+' is usually not needed, but we optimized for phone here as per request.
-            // We will strip any existing '+' just in case and add it back to ensure consistency, 
-            // or better yet, just blindly add it if it looks like a number.
-
-            let telegramUrl;
-            if (/^\d+$/.test(TARGET_CONTACT)) {
-                telegramUrl = `https://t.me/+${TARGET_CONTACT}?text=${encodedText}`;
-            } else {
-                telegramUrl = `https://t.me/${TARGET_CONTACT}?text=${encodedText}`;
-            }
-
-            // Open Telegram
-            window.open(telegramUrl, '_blank');
-
-            // Reset form UI
-            submitBtn.textContent = originalBtnText;
-            submitBtn.disabled = false;
-            bookingForm.reset();
-            document.querySelectorAll('.calc-checkbox:checked').forEach(cb => {
-                cb.checked = false;
-                cb.dispatchEvent(new Event('change'));
-            });
-            document.querySelectorAll('.calc-checkbox:checked').forEach(cb => {
-                cb.checked = false;
-                cb.dispatchEvent(new Event('change'));
-            });
-        });
-    }
-
-    // --- Phone Input Mask (+7) ---
-    const phoneInput = document.querySelector('input[type="tel"]');
-
-    if (phoneInput) {
-        const formatPhoneNumber = (input) => {
-            let value = input.value.replace(/\D/g, ''); // Strip non-digits
-            let formattedValue = '';
-
-            if (!value) {
-                return '';
-            }
-
-            // Handle Russian numbers starting with 7, 8 or 9
-            if (["7", "8", "9"].indexOf(value[0]) > -1) {
-                // If starts with 9, assume it's 79...
-                if (value[0] === '9') value = '7' + value;
-
-                // Force first digit to 7 for consistency
-                let firstDigit = '7'; // or value[0] if we wanted to allow 8
-
-                formattedValue = '+' + firstDigit + ' ';
-
-                if (value.length > 1) {
-                    formattedValue += '(' + value.substring(1, 4);
-                }
-                if (value.length >= 5) {
-                    formattedValue += ') ' + value.substring(4, 7);
-                }
-                if (value.length >= 8) {
-                    formattedValue += '-' + value.substring(7, 9);
-                }
-                if (value.length >= 10) {
-                    formattedValue += '-' + value.substring(9, 11);
-                }
-            } else {
-                // Not a Russian number? Just add +
-                formattedValue = '+' + value.substring(0, 16);
-            }
-
-            return formattedValue;
-        };
-
-        const onPhoneInput = (e) => {
-            const input = e.target;
-            const selectionStart = input.selectionStart;
-            const oldValueLength = input.value.length;
-
-            // Allow backspace to delete normally if it's simpler, 
-            // but strict masking usually re-formats everything.
-            // A simple approach for Vanilla JS is to only format on input excluding deletions potentially
-            // but standard "replace everything" is robust for pasting.
-
-            // Check if deleting (inputType can help in modern browsers, but fallback needed)
-            // e.inputType === 'deleteContentBackward' 
-
-            input.value = formatPhoneNumber(input);
-
-            // Simple cursor fix (not perfect but decent)
-            // If we added characters, move cursor to end usually works for masks
-            // unless editing in middle.
-        };
-
-        const onPhoneKeyDown = (e) => {
-            // Clear input if backspace pressed on empty-looking mask
-            const input = e.target;
-            if (e.key === 'Backspace' && input.value.length <= 4) { // "+7 ("
-                input.value = '';
-            }
-        };
-
-        phoneInput.addEventListener('input', onPhoneInput);
-        phoneInput.addEventListener('keydown', onPhoneKeyDown);
-
-        // Initial placeholder on focus
-        phoneInput.addEventListener('focus', () => {
-            if (!phoneInput.value) {
-                phoneInput.value = '+7 (';
             }
         });
-
-        // Clear if empty on blur
-        phoneInput.addEventListener('blur', () => {
-            if (phoneInput.value === '+7 (' || phoneInput.value.length < 3) {
-                phoneInput.value = '';
-            }
-        });
-    }
+    });
 
     // --- Main Services Spotlight Effect ---
     const msCards = document.querySelectorAll('.ms-card');
