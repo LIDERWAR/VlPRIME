@@ -17,7 +17,7 @@ get_header();
 <section class="article-page section-padding">
 	<div class="container">
 		<div class="article-content">
-			<a href="<?php echo esc_url(get_category_link(get_category_by_slug('blog'))); ?>" class="back-link">&larr; Назад к статьям</a>
+			<a href="<?php echo esc_url(get_category_link(get_category_by_slug('blog'))); ?>" class="back-link">Назад к статьям</a>
 
 			<header class="article-header">
 				<div class="article-meta">

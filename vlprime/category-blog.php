@@ -59,7 +59,7 @@ get_header();
                             <p class="blog-card__text">
                                 <?php echo get_the_excerpt(); ?>
                             </p>
-                            <a href="<?php echo get_the_permalink(); ?>" class="blog-card__link">Читать далее &rarr;</a>
+                            <a href="<?php echo get_the_permalink(); ?>" class="blog-card__link">Читать далее</a>
                         </div>
                     </article>
                     <?php

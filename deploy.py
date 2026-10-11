@@ -43,8 +43,9 @@ def check_env():
 
 def get_ftp_client():
     ftp = ftplib.FTP()
-    ftp.connect(HOST, PORT, timeout=15)
+    ftp.connect(HOST, PORT, timeout=30)
     ftp.login(USER, PASSWORD)
+    ftp.set_pasv(True)
     ftp.voidcmd('TYPE I')
     return ftp
 
@@ -212,8 +213,27 @@ def ftp_upload(source_dir, dry_run=False):
                 action_str = "[DRY-RUN UPLOAD]" if dry_run else "[UPLOAD]"
                 print(f"  {action_str} {file} -> {remote_file}")
                 if not dry_run:
-                    with open(local_file, "rb") as f:
-                        ftp.storbinary(f"STOR {remote_file}", f)
+                    success = False
+                    for attempt in range(1, 4):
+                        try:
+                            with open(local_file, "rb") as f:
+                                ftp.storbinary(f"STOR {remote_file}", f)
+                            success = True
+                            break
+                        except Exception as e:
+                            print(f"    [!] Попытка {attempt}/3 не удалась ({e}). Переподключение...")
+                            try:
+                                ftp.quit()
+                            except Exception:
+                                pass
+                            import time
+                            time.sleep(1)
+                            try:
+                                ftp = get_ftp_client()
+                            except Exception as ce:
+                                print(f"    [!] Ошибка переподключения: {ce}")
+                    if not success:
+                        print(f"    [ОШИБКА] Не удалось загрузить {remote_file} после 3 попыток.")
                 uploaded_count += 1
 
     ftp.quit()
