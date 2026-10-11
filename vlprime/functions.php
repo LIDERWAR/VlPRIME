@@ -152,6 +152,44 @@ function vlprime_ajax_booking_handler()
 	$headers = array('Content-Type: text/plain; charset=UTF-8');
 	@wp_mail($admin_email, $subject, $body, $headers);
 
+	// Telegram Bot notification (если заданы токен и chat_id)
+	$tg_bot_token = defined('VLPRIME_TG_TOKEN') ? VLPRIME_TG_TOKEN : get_option('vlprime_tg_token', '');
+	$tg_chat_id = defined('VLPRIME_TG_CHAT_ID') ? VLPRIME_TG_CHAT_ID : get_option('vlprime_tg_chat_id', '');
+
+	if (!empty($tg_bot_token) && !empty($tg_chat_id)) {
+		$tg_text = "🚗 *Новая заявка на сервис Volvo!*\n\n";
+		$tg_text .= "👤 *Имя:* " . $name . "\n";
+		$clean_tel = preg_replace('/[^0-9+]/', '', $phone);
+		$tg_text .= "📞 *Телефон:* [" . $phone . "](tel:" . $clean_tel . ")\n";
+		$tg_text .= "🚘 *Модель:* Volvo " . $model . "\n";
+		if (!empty($services)) {
+			$tg_text .= "🔧 *Услуги:* " . $services . "\n";
+		}
+		$tg_text .= "⏱ *Время:* " . current_time('d.m.Y H:i');
+
+		@wp_remote_post("https://api.telegram.org/bot{$tg_bot_token}/sendMessage", array(
+			'timeout' => 5,
+			'body' => array(
+				'chat_id' => $tg_chat_id,
+				'text' => $tg_text,
+				'parse_mode' => 'Markdown'
+			)
+		));
+	}
+
+	// Сохранение лида в кэш БД (гарантия от потери заявок при сбоях почты)
+	$leads = get_option('vlprime_leads_cache', array());
+	if (!is_array($leads)) $leads = array();
+	$leads[] = array(
+		'time' => current_time('mysql'),
+		'name' => $name,
+		'phone' => $phone,
+		'model' => $model,
+		'services' => $services
+	);
+	if (count($leads) > 100) array_shift($leads);
+	update_option('vlprime_leads_cache', $leads, false);
+
 	wp_send_json_success(array(
 		'message' => 'Заявка успешно принята! Мы перезвоним вам в течение 10 минут.'
 	));

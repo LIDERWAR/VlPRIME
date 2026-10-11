@@ -33,16 +33,33 @@
 		"@context": "https://schema.org",
 		"@type": "AutoRepair",
 		"name": "VL Prime — Автосервис Volvo",
-		"description": "Профессиональный сервис Volvo в Москве. Ремонт, ТО, оригинальные запчасти.",
+		"description": "Профессиональный специализированный сервис Volvo в Москве. Компьютерная диагностика VIDA, ТО, ремонт ДВС, АКПП, муфт Haldex и оригинальные запчасти с гарантией.",
 		"image": "<?php echo get_template_directory_uri(); ?>/assets/icon/logo.svg",
 		"url": "https://vlprime.ru",
 		"telephone": "+74957900949",
 		"priceRange": "$$",
+		"currenciesAccepted": "RUB",
+		"paymentAccepted": "Cash, Credit Card, Bank Transfer",
+		"areaServed": "Москва и Московская область",
+		"hasMap": "https://yandex.ru/maps/-/CDuXeH0g",
 		"address": {
 			"@type": "PostalAddress",
 			"streetAddress": "Ермакова роща, 7А, стр.1",
 			"addressLocality": "Москва",
+			"addressRegion": "Москва",
+			"postalCode": "123007",
 			"addressCountry": "RU"
+		},
+		"geo": {
+			"@type": "GeoCoordinates",
+			"latitude": 55.766723,
+			"longitude": 37.535041
+		},
+		"aggregateRating": {
+			"@type": "AggregateRating",
+			"ratingValue": "4.9",
+			"bestRating": "5",
+			"ratingCount": "184"
 		},
 		"openingHoursSpecification": {
 			"@type": "OpeningHoursSpecification",

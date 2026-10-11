@@ -716,8 +716,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     };
 
-    // Open triggers: data-modal-open="booking" and links to #booking without target on page
-    document.querySelectorAll('[data-modal-open="booking"], a[href="#booking"], a[href*="/service/#booking"]').forEach(trigger => {
+    // Open triggers: data-modal-open, data-modal-target and links to #booking
+    document.querySelectorAll('[data-modal-open="booking"], [data-modal-open="bookingModal"], a[href="#booking"], a[href*="/service/#booking"]').forEach(trigger => {
         trigger.addEventListener('click', (e) => {
             const hasInlineBooking = document.querySelector('.services-booking .booking-form, section#booking .booking-form');
             const isServicePage = window.location.pathname.includes('/service');
@@ -729,14 +729,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Close triggers
+    // Generic Modal Target trigger (e.g., privacyModal)
+    document.querySelectorAll('[data-modal-target]').forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = trigger.getAttribute('data-modal-target');
+            const targetModal = document.getElementById(targetId);
+            if (targetModal) {
+                targetModal.style.display = 'flex';
+                void targetModal.offsetWidth;
+                targetModal.classList.add('active');
+                targetModal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+
+    // Close triggers for any modal
     document.querySelectorAll('[data-modal-close]').forEach(btn => {
-        btn.addEventListener('click', closeBookingModal);
+        btn.addEventListener('click', () => {
+            const modal = btn.closest('.modal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    if (!modal.classList.contains('active')) {
+                        modal.style.display = 'none';
+                    }
+                }, 300);
+            } else {
+                closeBookingModal();
+            }
+        });
     });
 
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && bookingModal && bookingModal.classList.contains('active')) {
-            closeBookingModal();
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal.active').forEach(modal => {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    if (!modal.classList.contains('active')) modal.style.display = 'none';
+                }, 300);
+            });
         }
     });
 
