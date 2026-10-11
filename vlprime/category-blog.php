@@ -47,7 +47,6 @@ get_header();
                             <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>"
                                 class="blog-card__img">
                             <div class="blog-card__overlay"></div>
-                            <span class="blog-card__date"><?php echo get_the_date(); ?></span>
                         </div>
                         <div class="blog-card__content">
                             <span class="blog-card__tag">

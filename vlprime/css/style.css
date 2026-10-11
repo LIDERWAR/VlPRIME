@@ -2486,16 +2486,7 @@ img {
 }
 
 .blog-card__date {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    background-color: var(--color-primary);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    z-index: 2;
+    display: none !important;
 }
 
 .blog-card__content {
