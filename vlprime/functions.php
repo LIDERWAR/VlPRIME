@@ -99,6 +99,20 @@ add_action('after_setup_theme', 'vlprime_content_width', 0);
 
 
 /**
+ * Returns WebP image URL if available for better performance
+ */
+function vlprime_img_url($field_or_url)
+{
+	if (empty($field_or_url)) return '';
+	$url = is_array($field_or_url) ? ($field_or_url['url'] ?? '') : $field_or_url;
+	if (empty($url) || !is_string($url)) return '';
+
+	// Return WebP equivalent if image is PNG or JPG
+	$webp_url = preg_replace('/\.(png|jpe?g)$/i', '.webp', $url);
+	return $webp_url;
+}
+
+/**
  * Enqueue scripts and styles.
  */
 function vlprime_scripts()
@@ -108,9 +122,9 @@ function vlprime_scripts()
 	$css_ver = file_exists($css_file) ? filemtime($css_file) : _S_VERSION;
 	$js_ver = file_exists($js_file) ? filemtime($js_file) : _S_VERSION;
 
-	wp_enqueue_style('vlprime-style', get_stylesheet_uri(), array(), $css_ver);
+	// Root style.css contains only theme headers and no styles; main styles are in css/style.css
 	wp_enqueue_style('vlprime-style-main', get_template_directory_uri() . '/css/style.css', array(), $css_ver);
-	wp_enqueue_style('vlprime-style-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@600&display=swap', array(), _S_VERSION);
+	wp_enqueue_style('vlprime-style-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700&family=Poppins:wght@600&display=swap', array(), null);
 	wp_enqueue_script('vlprime-script-main', get_template_directory_uri() . '/js/script.js', array(), $js_ver, true);
 
 	wp_localize_script('vlprime-script-main', 'vlprime_ajax', array(
@@ -196,7 +210,6 @@ function vlprime_ajax_booking_handler()
 }
 add_action('wp_ajax_vlprime_booking', 'vlprime_ajax_booking_handler');
 add_action('wp_ajax_nopriv_vlprime_booking', 'vlprime_ajax_booking_handler');
-
 
 if (function_exists('acf_add_options_page')) {
 

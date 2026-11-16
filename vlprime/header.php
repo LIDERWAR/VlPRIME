@@ -117,18 +117,52 @@
 							$social_link = get_sub_field('link');
 							$social_icon = get_sub_field('icon');
 							if (!empty($social_link['url'])): 
-								$social_name = !empty($social_link['title']) ? esc_attr($social_link['title']) : 'Мессенджер';
+								$link_url = $social_link['url'];
+								if (strpos($link_url, 'tel:') !== false) {
+									$link_url = 'tel:+79652044056';
+								} elseif (strpos($link_url, 't.me') !== false) {
+									$link_url = 'https://t.me/+79652044056';
+								}
+
+								$icon_url = '';
+								if (is_array($social_icon) && !empty($social_icon['url'])) {
+									$icon_url = $social_icon['url'];
+								} elseif (is_string($social_icon) && !empty($social_icon)) {
+									$icon_url = $social_icon;
+								}
+
+								// Safe fallback to native theme icons
+								if (empty($icon_url)) {
+									if (strpos($link_url, 'tel:') !== false) {
+										$icon_url = get_template_directory_uri() . '/assets/icon/social/phone.svg';
+									} elseif (strpos($link_url, 't.me') !== false) {
+										$icon_url = get_template_directory_uri() . '/assets/icon/social/telegram.svg';
+									} elseif (strpos($link_url, 'wa.me') !== false) {
+										$icon_url = get_template_directory_uri() . '/assets/icon/social/whatsapp.svg';
+									} else {
+										$icon_url = get_template_directory_uri() . '/assets/icon/social/max-circle.svg';
+									}
+								}
+
+								$social_name = !empty($social_link['title']) ? esc_attr($social_link['title']) : 'Контакт';
+								if (strpos($link_url, 'tel:') !== false) {
+									$social_name = 'Позвонить';
+								} elseif (strpos($link_url, 't.me') !== false) {
+									$social_name = 'Telegram';
+								}
 							?>
-								<a href="<?php echo esc_url($social_link['url']); ?>" class="social-link"
+								<a href="<?php echo esc_url($link_url); ?>" class="social-link"
 									aria-label="<?php echo $social_name; ?>"
-									style="--icon-url: url('<?php echo esc_url($social_icon); ?>')"></a>
+									style="--icon-url: url('<?php echo esc_url($icon_url); ?>')"></a>
 							<?php endif;
 						endwhile;
 					else: ?>
-						<a href="https://wa.me/79096249289" class="social-link" aria-label="WhatsApp"
-							style="--icon-url: url('<?php echo get_template_directory_uri(); ?>/assets/icon/social/whatsapp.svg')"></a>
+						<a href="tel:+79652044056" class="social-link" aria-label="Позвонить"
+							style="--icon-url: url('<?php echo get_template_directory_uri(); ?>/assets/icon/social/phone.svg')"></a>
 						<a href="https://t.me/+79652044056" class="social-link" aria-label="Telegram"
 							style="--icon-url: url('<?php echo get_template_directory_uri(); ?>/assets/icon/social/telegram.svg')"></a>
+						<a href="#" class="social-link" aria-label="MAX"
+							style="--icon-url: url('<?php echo get_template_directory_uri(); ?>/assets/icon/social/max-circle.svg')"></a>
 					<?php endif; ?>
 				</div>
 			</div>
