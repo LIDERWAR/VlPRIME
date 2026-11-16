@@ -2,9 +2,14 @@
 	<div class="container">
 		<div class="footer__inner">
 			<div class="footer__col footer__col--info">
-				<a href="/" class="footer__logo-link">
-					<img src="<?php echo get_field('footer_logo', 'option')['url']; ?>"
-						alt="<?php echo get_field('footer_logo', 'option')['alt']; ?>" class="footer__logo-img">
+				<a href="<?php echo esc_url(home_url('/')); ?>" class="footer__logo-link" aria-label="VL Prime Главная">
+					<?php 
+					$footer_logo = get_field('footer_logo', 'option');
+					$footer_logo_url = (!empty($footer_logo) && !empty($footer_logo['url'])) ? esc_url($footer_logo['url']) : get_template_directory_uri() . '/assets/icon/logo.svg';
+					$footer_logo_alt = (!empty($footer_logo) && !empty($footer_logo['alt'])) ? esc_attr($footer_logo['alt']) : 'VL Prime';
+					?>
+					<img src="<?php echo $footer_logo_url; ?>"
+						alt="<?php echo $footer_logo_alt; ?>" class="footer__logo-img" width="129" height="51" loading="lazy" decoding="async">
 				</a>
 				<p class="footer__desc">
 					<?php echo get_field('footer_description', 'option'); ?>
@@ -12,7 +17,7 @@
 			</div>
 
 			<div class="footer__col">
-				<h4 class="footer__title">Навигация</h4>
+				<h3 class="footer__title">Навигация</h3>
 				<?php wp_nav_menu([
 					'theme_location' => 'footer',
 					'menu' => '',
@@ -39,7 +44,7 @@
 			</div>
 
 			<div class="footer__col">
-				<h4 class="footer__title">Контакты</h4>
+				<h3 class="footer__title">Контакты</h3>
 				<ul class="footer__contacts">
 					<li>
 						<?php
@@ -134,7 +139,7 @@
 			<h3 class="modal__title">Спасибо за заявку!</h3>
 			<p class="modal__desc">Мы получили ваши данные. Мастер-приемщик свяжется с вами в течение 10 минут.</p>
 			<div class="modal__success-actions">
-				<a id="modalTgLink" href="https://t.me/+79096249289" target="_blank" class="btn btn--primary">Написать в Telegram (+7 909 624-92-89)</a>
+				<a id="modalTgLink" href="https://t.me/+79652044056" target="_blank" class="btn btn--primary">Написать в Telegram (+7 965 204-40-56)</a>
 				<a id="modalWaLink" href="https://wa.me/79096249289" target="_blank" class="btn btn--secondary">Написать в WhatsApp</a>
 				<button type="button" class="btn btn--secondary" data-modal-close>Закрыть окно</button>
 			</div>
@@ -181,7 +186,7 @@
 		<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.44 19.65L5.27 16.61L5.09 16.31C4.28 15.01 3.81 13.48 3.81 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.53 7.34C9.36 7.34 9.09 7.4 8.87 7.65C8.65 7.89 8.02 8.48 8.02 9.7C8.02 10.92 8.91 12.1 9.03 12.26C9.15 12.42 10.74 14.88 13.2 15.94C15.24 16.82 15.66 16.65 16.1 16.61C16.55 16.57 17.54 16.02 17.75 15.44C17.95 14.86 17.95 14.36 17.89 14.26C17.83 14.16 17.66 14.1 17.41 13.98C17.16 13.86 15.94 13.26 15.71 13.18C15.49 13.09 15.32 13.05 15.16 13.3C14.99 13.55 14.52 14.1 14.38 14.26C14.24 14.43 14.1 14.45 13.85 14.33C13.6 14.21 12.8 13.94 11.85 13.1C11.11 12.44 10.61 11.63 10.47 11.38C10.33 11.13 10.45 11 10.58 10.87C10.69 10.76 10.83 10.58 10.95 10.44C11.08 10.3 11.12 10.2 11.2 10.03C11.28 9.87 11.24 9.72 11.18 9.6C11.12 9.48 10.63 8.28 10.42 7.79C10.22 7.31 10.02 7.37 9.86 7.36C9.72 7.35 9.53 7.34 9.53 7.34Z"></path></svg>
 		<span>WhatsApp</span>
 	</a>
-	<a href="https://t.me/+79096249289" target="_blank" rel="noopener" class="mobile-sticky-bar__item mobile-sticky-bar__item--tg">
+	<a href="https://t.me/+79652044056" target="_blank" rel="noopener" class="mobile-sticky-bar__item mobile-sticky-bar__item--tg">
 		<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"></path></svg>
 		<span>Telegram</span>
 	</a>

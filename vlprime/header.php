@@ -16,7 +16,10 @@
 <head>
 	<meta charset="<?php bloginfo('charset'); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Специализированный автосервис Volvo в Москве. Компьютерная диагностика VIDA, ТО, ремонт двигателей и АКПП, оригинальные запчасти с гарантией.">
 	<link rel="icon" href="<?php echo get_template_directory_uri(); ?>/favicon.ico" type="image/x-icon">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 	<!-- Open Graph / Meta -->
 	<meta property="og:locale" content="ru_RU">
@@ -70,6 +73,24 @@
 	}
 	</script>
 
+	<!-- Yandex.Metrika counter (VL Prime / Yandex Direct) -->
+	<script type="text/javascript">
+	   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+	   m[i].l=1*new Date();
+	   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+	   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+	   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+	   ym(95212734, "init", {
+			clickmap:true,
+			trackLinks:true,
+			accurateTrackBounce:true,
+			webvisor:true
+	   });
+	</script>
+	<noscript><div><img src="https://mc.yandex.ru/watch/95212734" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+	<!-- /Yandex.Metrika counter -->
+
 	<?php wp_head(); ?>
 </head>
 
@@ -85,8 +106,8 @@
 				$logo_url = (!empty($header_logo) && !empty($header_logo['url'])) ? esc_url($header_logo['url']) : get_template_directory_uri() . '/assets/icon/logo.svg';
 				$logo_alt = (!empty($header_logo) && !empty($header_logo['alt'])) ? esc_attr($header_logo['alt']) : 'VL Prime';
 				?>
-				<a href="<?php echo esc_url(home_url('/')); ?>" class="logo">
-					<img src="<?php echo $logo_url; ?>" alt="<?php echo $logo_alt; ?>" class="logo__img">
+				<a href="<?php echo esc_url(home_url('/')); ?>" class="logo" aria-label="VL Prime Главная">
+					<img src="<?php echo $logo_url; ?>" alt="<?php echo $logo_alt; ?>" class="logo__img" width="129" height="51">
 				</a>
 				<div class="header__socials">
 					<?php
@@ -95,15 +116,18 @@
 							the_row(); 
 							$social_link = get_sub_field('link');
 							$social_icon = get_sub_field('icon');
-							if (!empty($social_link['url'])): ?>
+							if (!empty($social_link['url'])): 
+								$social_name = !empty($social_link['title']) ? esc_attr($social_link['title']) : 'Мессенджер';
+							?>
 								<a href="<?php echo esc_url($social_link['url']); ?>" class="social-link"
+									aria-label="<?php echo $social_name; ?>"
 									style="--icon-url: url('<?php echo esc_url($social_icon); ?>')"></a>
 							<?php endif;
 						endwhile;
 					else: ?>
 						<a href="https://wa.me/79096249289" class="social-link" aria-label="WhatsApp"
 							style="--icon-url: url('<?php echo get_template_directory_uri(); ?>/assets/icon/social/whatsapp.svg')"></a>
-						<a href="https://t.me/+79096249289" class="social-link" aria-label="Telegram"
+						<a href="https://t.me/+79652044056" class="social-link" aria-label="Telegram"
 							style="--icon-url: url('<?php echo get_template_directory_uri(); ?>/assets/icon/social/telegram.svg')"></a>
 					<?php endif; ?>
 				</div>

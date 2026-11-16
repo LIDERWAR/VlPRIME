@@ -33,7 +33,7 @@ if (function_exists('acf_add_local_field_group')):
                 'label' => 'Telegram Link',
                 'name' => 'telegram_link',
                 'type' => 'url',
-                'default_value' => 'https://t.me/+79266262662',
+                'default_value' => 'https://t.me/+79652044056',
             ),
             array(
                 'key' => 'field_address_text',

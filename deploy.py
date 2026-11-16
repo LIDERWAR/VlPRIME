@@ -167,7 +167,7 @@ def sync_local_assets():
                 if not dst_f.exists() or src_f.stat().st_mtime > dst_f.stat().st_mtime:
                     shutil.copy2(src_f, dst_f)
 
-def ftp_upload(source_dir, dry_run=False):
+def ftp_upload(source_dir, dry_run=False, force=False, target_files=None):
     check_env()
     print(f"[*] Подготовка и синхронизация локальных файлов темы...")
     sync_local_assets()
@@ -177,6 +177,10 @@ def ftp_upload(source_dir, dry_run=False):
     print(f"[*] Целевая директория: {REMOTE_PATH}")
     if dry_run:
         print("[!] Режим DRY-RUN (файлы не будут перезаписаны)")
+    if force:
+        print("[*] Режим FORCE: проверка размера отключена, все файлы будут загружены")
+    if target_files:
+        print(f"[*] Целевые файлы для загрузки: {', '.join(target_files)}")
 
     uploaded_count = 0
     exclude_extensions = {".zip", ".tar", ".gz", ".log", ".tmp", ".xlsx", ".xls", ".doc", ".docx", ".pdf"}
@@ -198,16 +202,23 @@ def ftp_upload(source_dir, dry_run=False):
                 
             local_file = os.path.join(root, file)
             remote_file = f"{remote_curr}/{file}".replace("\\", "/")
+            rel_file = file if rel_dir == "." else f"{rel_dir}/{file}".replace("\\", "/")
             
-            # Проверка размера на сервере для пропуска неизмененных файлов
-            needs_upload = True
-            try:
-                r_size = ftp.size(remote_file)
-                l_size = os.path.getsize(local_file)
-                if r_size == l_size:
-                    needs_upload = False
-            except Exception:
+            if target_files:
+                if not any(tf.lower() in (file.lower(), rel_file.lower()) for tf in target_files):
+                    continue
                 needs_upload = True
+            else:
+                # Проверка размера на сервере для пропуска неизмененных файлов
+                needs_upload = True
+                if not force:
+                    try:
+                        r_size = ftp.size(remote_file)
+                        l_size = os.path.getsize(local_file)
+                        if r_size == l_size:
+                            needs_upload = False
+                    except Exception:
+                        needs_upload = True
                 
             if needs_upload:
                 action_str = "[DRY-RUN UPLOAD]" if dry_run else "[UPLOAD]"
@@ -246,6 +257,8 @@ def main():
     parser.add_argument("action", choices=["test", "push", "dry-run", "backup"],
                         help="test: проверка связи, push: загрузка на сервер, dry-run: симуляция, backup: выкачать бэкап с сервера")
     parser.add_argument("--source", default=None, help="Какую папку загружать (по умолчанию vlprime или vl-prime-theme)")
+    parser.add_argument("--force", action="store_true", help="Принудительно перезаписать все файлы на сервере")
+    parser.add_argument("--files", default=None, help="Список файлов через запятую для точечной выгрузки (например: footer.php,js/script.js)")
     args = parser.parse_args()
 
     # Определение локальной папки темы
@@ -259,14 +272,16 @@ def main():
     else:
         source_dir = BASE_DIR
 
+    target_files = [f.strip() for f in args.files.split(",") if f.strip()] if args.files else None
+
     if args.action == "test":
         ftp_test()
     elif args.action == "backup":
         ftp_backup()
     elif args.action == "dry-run":
-        ftp_upload(source_dir, dry_run=True)
+        ftp_upload(source_dir, dry_run=True, force=args.force, target_files=target_files)
     elif args.action == "push":
-        ftp_upload(source_dir, dry_run=False)
+        ftp_upload(source_dir, dry_run=False, force=args.force, target_files=target_files)
 
 if __name__ == "__main__":
     main()
