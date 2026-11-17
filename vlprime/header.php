@@ -119,7 +119,7 @@
 							if (!empty($social_link['url'])): 
 								$link_url = $social_link['url'];
 								if (strpos($link_url, 'tel:') !== false) {
-									$link_url = 'tel:+79652044056';
+									$link_url = 'tel:+74957900949';
 								} elseif (strpos($link_url, 't.me') !== false) {
 									$link_url = 'https://t.me/+79652044056';
 								}
@@ -157,7 +157,7 @@
 							<?php endif;
 						endwhile;
 					else: ?>
-						<a href="tel:+79652044056" class="social-link" aria-label="Позвонить"
+						<a href="tel:+74957900949" class="social-link" aria-label="Позвонить"
 							style="--icon-url: url('<?php echo get_template_directory_uri(); ?>/assets/icon/social/phone.svg')"></a>
 						<a href="https://t.me/+79652044056" class="social-link" aria-label="Telegram"
 							style="--icon-url: url('<?php echo get_template_directory_uri(); ?>/assets/icon/social/telegram.svg')"></a>
