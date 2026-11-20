@@ -140,8 +140,13 @@
 									} elseif (strpos($link_url, 'wa.me') !== false) {
 										$icon_url = get_template_directory_uri() . '/assets/icon/social/whatsapp.svg';
 									} else {
-										$icon_url = get_template_directory_uri() . '/assets/icon/social/max-circle.svg';
+										$icon_url = '';
 									}
+								}
+
+								// Skip MAX icon or placeholder links
+								if (empty($link_url) || $link_url === '#' || strpos($icon_url, 'max-circle') !== false) {
+									continue;
 								}
 
 								$social_name = !empty($social_link['title']) ? esc_attr($social_link['title']) : 'Контакт';
@@ -161,8 +166,6 @@
 							style="--icon-url: url('<?php echo get_template_directory_uri(); ?>/assets/icon/social/phone.svg')"></a>
 						<a href="https://t.me/+79652044056" class="social-link" aria-label="Telegram"
 							style="--icon-url: url('<?php echo get_template_directory_uri(); ?>/assets/icon/social/telegram.svg')"></a>
-						<a href="#" class="social-link" aria-label="MAX"
-							style="--icon-url: url('<?php echo get_template_directory_uri(); ?>/assets/icon/social/max-circle.svg')"></a>
 					<?php endif; ?>
 				</div>
 			</div>
