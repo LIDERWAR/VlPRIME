@@ -664,23 +664,13 @@ get_header();
                 <!--  -->
             </div>
 
-            <div class="contacts__map" id="contactsMapWrapper">
-                <!-- Yandex Map with Lazy Loading & Accessible Title -->
+            <div class="contacts__map">
+                <!-- Yandex Map -->
                 <?php 
                 $contacts_map = get_field('contacts_map');
                 if (!empty($contacts_map)) {
-                    if (preg_match('/src=["\']([^"\']+)["\']/', $contacts_map, $matches)) {
-                        $map_src = $matches[1];
-                        echo '<div id="yandexMapLazy" data-map-src="' . esc_attr($map_src) . '" style="min-height:350px;width:100%;display:flex;align-items:center;justify-content:center;background:#1a1a1d;border-radius:12px;color:#888;"><span>Загрузка карты...</span></div>';
-                    } else {
-                        if (strpos($contacts_map, 'title=') === false) {
-                            $contacts_map = str_replace('<iframe', '<iframe title="Карта проезда к сервису VL Prime"', $contacts_map);
-                        }
-                        if (strpos($contacts_map, 'loading=') === false) {
-                            $contacts_map = str_replace('<iframe', '<iframe loading="lazy"', $contacts_map);
-                        }
-                        echo $contacts_map;
-                    }
+                    $contacts_map = str_replace(array('width=500', 'height=400'), array('width=100%25', 'height=100%25'), $contacts_map);
+                    echo $contacts_map;
                 }
                 ?>
             </div>

@@ -2696,10 +2696,16 @@ img {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-.contacts__map iframe {
+.contacts__map iframe,
+.contacts__map ymaps,
+.contacts__map ymaps > ymaps {
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 500px !important;
+}
+
+.contacts__map iframe {
     /* Dark mode filter for map to match theme */
     filter: invert(90%) hue-rotate(180deg) contrast(90%);
 }

@@ -1062,54 +1062,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Init Lightbox
     setupLightbox();
 
-    // Lazy load Yandex Map & add title for accessibility
-    (function () {
-        const lazyMap = document.getElementById('yandexMapLazy');
-        if (!lazyMap) return;
-
-        let loaded = false;
-        function initMap() {
-            if (loaded) return;
-            loaded = true;
-            const src = lazyMap.getAttribute('data-map-src');
-            if (!src) return;
-
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.charset = 'utf-8';
-            script.async = true;
-            script.src = src;
-
-            const observer = new MutationObserver(function () {
-                const ifr = lazyMap.parentElement ? lazyMap.parentElement.querySelector('iframe') : null;
-                if (ifr) {
-                    if (!ifr.getAttribute('title')) {
-                        ifr.setAttribute('title', 'Интерактивная карта проезда к автосервису VL Prime');
-                    }
-                    observer.disconnect();
-                }
-            });
-            observer.observe(lazyMap.parentElement || lazyMap, { childList: true, subtree: true });
-
-            lazyMap.innerHTML = '';
-            lazyMap.appendChild(script);
-        }
-
-        if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver(function (entries) {
-                if (entries[0].isIntersecting) {
-                    initMap();
-                    observer.disconnect();
-                }
-            }, { rootMargin: '300px' });
-            observer.observe(lazyMap);
-        } else {
-            ['scroll', 'touchstart', 'click'].forEach(function (e) {
-                window.addEventListener(e, initMap, { once: true, passive: true });
-            });
-        }
-    })();
-
     // --- Phone & Telegram Conversion Tracking ---
     document.addEventListener('click', function (e) {
         const telLink = e.target.closest('a[href^="tel:"]');
