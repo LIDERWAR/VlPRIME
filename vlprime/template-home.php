@@ -6,16 +6,76 @@ get_header();
 ?>
 
 <!-- Hero Section -->
-<section id="hero" class="hero" style="background-image: url('<?php echo get_field('hero_background')['url'] ?>');">
+<section id="hero" class="hero" style="background-image: url('<?php echo vlprime_img_url(get_field('hero_background')); ?>');">
     <div class="hero__overlay"></div>
     <div class="container">
-        <div class="hero__content">
-            <span class="hero__overhead"><?php the_field('hero_subtitle'); ?></span>
-            <h1 class="hero__title"><?php the_field('hero_title'); ?></h1>
-            <p class="hero__subtitle"><?php the_field('hero_descr'); ?></p>
-            <a href="<?php echo get_field('hero_btn')['url'] ?>" class="btn btn--primary">
-                <?php echo get_field('hero_btn')['title'] ?>
-            </a>
+        <div class="hero__grid-wrapper">
+            <div class="hero__content">
+                <span class="hero__overhead"><?php the_field('hero_subtitle'); ?></span>
+                <h1 class="hero__title"><?php the_field('hero_title'); ?></h1>
+                <p class="hero__subtitle"><?php the_field('hero_descr'); ?></p>
+                
+                <div class="hero__trust-badges">
+                    <div class="hero__trust-badge">
+                        <span class="hero__badge-check">✓</span>
+                        <span><strong>Диагностика VIDA — 0 ₽</strong> при ремонте</span>
+                    </div>
+                    <div class="hero__trust-badge">
+                        <span class="hero__badge-check">✓</span>
+                        <span><strong>Честная смета</strong> без скрытых наценок</span>
+                    </div>
+                    <div class="hero__trust-badge">
+                        <span class="hero__badge-check">✓</span>
+                        <span><strong>Доступ в ремзону</strong> разрешён • Гарантия 12 мес.</span>
+                    </div>
+                </div>
+
+                <div class="hero__buttons">
+                    <a href="tel:+74957900949" class="btn btn--hero-phone">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        Позвонить: +7 (495) 790-09-49
+                    </a>
+                </div>
+            </div>
+
+            <!-- Open Quick Booking Form Card -->
+            <div id="quick-booking" class="hero__quick-form-card">
+                <div class="quick-form__header">
+                    <span class="quick-form__overhead">Онлайн-запись</span>
+                    <h3 class="quick-form__title">Экспресс-запись на сервис</h3>
+                    <p class="quick-form__subtitle">Перезвоним за 5 минут, назовём точную стоимость работ</p>
+                </div>
+                <form class="booking-form quick-form__body" data-form-type="ajax">
+                    <input type="hidden" name="action" value="vlprime_booking">
+                    <div class="quick-form__group">
+                        <input type="text" name="name" placeholder="Ваше имя *" class="form-input" required>
+                    </div>
+                    <div class="quick-form__group">
+                        <input type="tel" name="phone" placeholder="+7 (___) ___-__-__ *" class="form-input" required>
+                    </div>
+                    <div class="quick-form__group">
+                        <select name="model" class="form-select">
+                            <option value="" disabled selected>Выберите модель Volvo</option>
+                            <option value="XC90">Volvo XC90</option>
+                            <option value="XC70">Volvo XC70</option>
+                            <option value="XC60">Volvo XC60</option>
+                            <option value="XC40">Volvo XC40</option>
+                            <option value="S90">Volvo S90</option>
+                            <option value="S80">Volvo S80</option>
+                            <option value="S60">Volvo S60</option>
+                            <option value="V90">Volvo V90</option>
+                            <option value="V60">Volvo V60</option>
+                            <option value="Other">Другая модель</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn--primary quick-form__submit">
+                        Записаться на диагностику за 0 ₽
+                    </button>
+                    <p class="quick-form__policy">
+                        Нажимая кнопку, вы соглашаетесь с условиями обработки данных
+                    </p>
+                </form>
+            </div>
         </div>
     </div>
 </section>
@@ -38,8 +98,8 @@ get_header();
             </div>
             <div class="about__visual">
                 <!-- Placeholder for About Image -->
-                <img src="<?php echo get_field('about_img')['url'] ?>" alt="<?php echo get_field('about_img')['alt'] ?>"
-                    class="about__img">
+                <img src="<?php echo vlprime_img_url(get_field('about_img')); ?>" alt="<?php echo get_field('about_img')['alt'] ?>"
+                    class="about__img" width="500" height="280" loading="lazy" decoding="async">
             </div>
         </div>
     </div>
@@ -62,7 +122,7 @@ get_header();
                     have_rows('services_repeater')
                 ):
                     the_row(); ?>
-                    <article class="service-card" style="background-image: url('<?php echo get_sub_field('image')['url'] ?>');">
+                    <article class="service-card" style="background-image: url('<?php echo vlprime_img_url(get_sub_field('image')); ?>');">
                         <div class="service-card__icon-box">
                             <?php echo get_sub_field('icon'); ?>
 
@@ -149,7 +209,7 @@ get_header();
                     the_row(); ?>
 
                     <div class="promo-card promo-card--primary"
-                        style="background-image: url('<?php echo get_sub_field('image')['url'] ?>');">
+                        style="background-image: url('<?php echo vlprime_img_url(get_sub_field('image')); ?>');">
                         <div class="promo-card__content">
                             <span class="promo-card__label"><?php the_sub_field('icon'); ?></span>
                             <h3 class="promo-card__title"><?php the_sub_field('title'); ?></h3>
@@ -203,7 +263,7 @@ get_header();
                     <?php the_field('convenience_descr'); ?>
                 </p>
                 <div class="adv-card__bg"
-                    style="background-image: url('<?php echo get_field('convenience_background')['url'] ?>');"></div>
+                    style="background-image: url('<?php echo vlprime_img_url(get_field('convenience_background')); ?>');"></div>
             </div>
 
             <!-- Standard Cards -->
@@ -211,28 +271,28 @@ get_header();
                 <div class="adv-card__icon-small">
                     <?php echo get_field('warranty_icon'); ?>
                 </div>
-                <h4 class="adv-card__subtitle">
+                <h3 class="adv-card__subtitle">
                     <?php the_field('warranty_title'); ?>
-                </h4>
+                </h3>
                 <p class="adv-card__text">
                     <?php the_field('warranty_descr'); ?>
                 </p>
                 <div class="adv-card__bg"
-                    style="background-image: url('<?php echo get_field('warranty_background')['url'] ?>');"></div>
+                    style="background-image: url('<?php echo vlprime_img_url(get_field('warranty_background')); ?>');"></div>
             </div>
 
             <div class="adv-card adv-card--vida">
                 <div class="adv-card__icon-small">
                     <?php echo get_field('vida_icon'); ?>
                 </div>
-                <h4 class="adv-card__subtitle">
+                <h3 class="adv-card__subtitle">
                     <?php the_field('vida_title'); ?>
-                </h4>
+                </h3>
                 <p class="adv-card__text">
                     <?php the_field('vida_descr'); ?>
                 </p>
                 <div class="adv-card__bg"
-                    style="background-image: url('<?php echo get_field('vida_background')['url'] ?>');"></div>
+                    style="background-image: url('<?php echo vlprime_img_url(get_field('vida_background')); ?>');"></div>
             </div>
 
             <!-- Full Width Card (Original Parts) -->
@@ -241,7 +301,7 @@ get_header();
                     <?php echo get_field('full_icon'); ?>
 
                 </div>
-                <h4 class="adv-card__subtitle"><?php echo get_field('full_title'); ?></h4>
+                <h3 class="adv-card__subtitle"><?php echo get_field('full_title'); ?></h3>
                 <p class="adv-card__text"><?php echo get_field('full_descr'); ?></p>
             </div>
         </div>
@@ -310,8 +370,8 @@ get_header();
 
                     <article class="blog-card" data-category="tips">
                         <div class="blog-card__image-box">
-                            <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>"
-                                class="blog-card__img">
+                            <img src="<?php echo vlprime_img_url(get_the_post_thumbnail_url()); ?>" alt="<?php echo get_the_title(); ?>"
+                                class="blog-card__img" loading="lazy" decoding="async">
                             <div class="blog-card__overlay"></div>
                         </div>
                         <div class="blog-card__content">
@@ -424,8 +484,8 @@ get_header();
                     if (have_rows('partners_repeater')):
                         while (have_rows('partners_repeater')):
                             the_row(); ?>
-                            <div class="partner-card"><img src="<?php echo get_sub_field('image')['url']; ?>"
-                                    alt="<?php echo get_sub_field('image')['alt']; ?>">
+                            <div class="partner-card"><img src="<?php echo vlprime_img_url(get_sub_field('image')); ?>"
+                                    alt="<?php echo get_sub_field('image')['alt']; ?>" loading="lazy" decoding="async">
                             </div>
 
 
@@ -491,7 +551,7 @@ get_header();
                             <div class="review-card__user">
                                 <span class="review-user__initial"><?php the_sub_field('initial'); ?></span>
                                 <div>
-                                    <h4 class="review-user__name"><?php the_sub_field('name'); ?></h4>
+                                    <h3 class="review-user__name"><?php the_sub_field('name'); ?></h3>
                                     <span class="review-user__car"><?php the_sub_field('car'); ?></span>
                                 </div>
                             </div>
@@ -585,8 +645,8 @@ get_header();
 
                     <article class="blog-card" data-category="tips">
                         <div class="blog-card__image-box">
-                            <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>"
-                                class="blog-card__img">
+                            <img src="<?php echo vlprime_img_url(get_the_post_thumbnail_url()); ?>" alt="<?php echo get_the_title(); ?>"
+                                class="blog-card__img" loading="lazy" decoding="async">
                             <div class="blog-card__overlay"></div>
                         </div>
                         <div class="blog-card__content">
@@ -642,9 +702,9 @@ get_header();
                                 <?php echo get_sub_field('icon'); ?>
                             </div>
                             <div>
-                                <h4 class="contacts__label">
+                                <h3 class="contacts__label">
                                     <?php the_sub_field('label'); ?>
-                                </h4>
+                                </h3>
                                 <p class="contacts__text">
                                     <?php the_sub_field('text'); ?>
                                 </p>
@@ -664,9 +724,25 @@ get_header();
                 <!--  -->
             </div>
 
-            <div class="contacts__map">
-                <!-- Yandex Map Placeholder -->
-                <?php echo get_field('contacts_map'); ?>
+            <div class="contacts__map" id="contactsMapWrapper">
+                <!-- Yandex Map with Lazy Loading & Accessible Title -->
+                <?php 
+                $contacts_map = get_field('contacts_map');
+                if (!empty($contacts_map)) {
+                    if (preg_match('/src=["\']([^"\']+)["\']/', $contacts_map, $matches)) {
+                        $map_src = $matches[1];
+                        echo '<div id="yandexMapLazy" data-map-src="' . esc_attr($map_src) . '" style="min-height:350px;width:100%;display:flex;align-items:center;justify-content:center;background:#1a1a1d;border-radius:12px;color:#888;"><span>Загрузка карты...</span></div>';
+                    } else {
+                        if (strpos($contacts_map, 'title=') === false) {
+                            $contacts_map = str_replace('<iframe', '<iframe title="Карта проезда к сервису VL Prime"', $contacts_map);
+                        }
+                        if (strpos($contacts_map, 'loading=') === false) {
+                            $contacts_map = str_replace('<iframe', '<iframe loading="lazy"', $contacts_map);
+                        }
+                        echo $contacts_map;
+                    }
+                }
+                ?>
             </div>
         </div>
     </div>

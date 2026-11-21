@@ -1110,4 +1110,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })();
 
+    // --- Phone & Telegram Conversion Tracking ---
+    document.addEventListener('click', function (e) {
+        const telLink = e.target.closest('a[href^="tel:"]');
+        if (telLink) {
+            if (typeof ym === 'function') {
+                try { ym(95212734, 'reachGoal', 'click_phone'); } catch (err) {}
+                try { ym(114435196, 'reachGoal', 'click_phone'); } catch (err) {}
+            }
+        }
+        const tgLink = e.target.closest('a[href*="t.me"], a[href*="telegram"]');
+        if (tgLink) {
+            if (typeof ym === 'function') {
+                try { ym(95212734, 'reachGoal', 'click_telegram'); } catch (err) {}
+                try { ym(114435196, 'reachGoal', 'click_telegram'); } catch (err) {}
+            }
+        }
+    });
+
 });
