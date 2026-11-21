@@ -87,8 +87,14 @@
 			accurateTrackBounce:true,
 			webvisor:true
 	   });
+	   ym(114435196, "init", {
+			clickmap:true,
+			trackLinks:true,
+			accurateTrackBounce:true,
+			webvisor:true
+	   });
 	</script>
-	<noscript><div><img src="https://mc.yandex.ru/watch/95212734" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+	<noscript><div><img src="https://mc.yandex.ru/watch/95212734" style="position:absolute; left:-9999px;" alt="" /><img src="https://mc.yandex.ru/watch/114435196" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 	<!-- /Yandex.Metrika counter -->
 
 	<?php wp_head(); ?>

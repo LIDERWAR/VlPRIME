@@ -945,6 +945,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Success Handling:
             if (typeof ym === 'function') {
                 try { ym(95212734, 'reachGoal', 'lead_booking'); } catch (e) {}
+                try { ym(114435196, 'reachGoal', 'lead_booking'); } catch (e) {}
             }
             if (form.closest('#bookingModal')) {
                 if (modalFormContainer) modalFormContainer.style.display = 'none';
