@@ -9,73 +9,13 @@ get_header();
 <section id="hero" class="hero" style="background-image: url('<?php echo vlprime_img_url(get_field('hero_background')); ?>');">
     <div class="hero__overlay"></div>
     <div class="container">
-        <div class="hero__grid-wrapper">
-            <div class="hero__content">
-                <span class="hero__overhead"><?php the_field('hero_subtitle'); ?></span>
-                <h1 class="hero__title"><?php the_field('hero_title'); ?></h1>
-                <p class="hero__subtitle"><?php the_field('hero_descr'); ?></p>
-                
-                <div class="hero__trust-badges">
-                    <div class="hero__trust-badge">
-                        <span class="hero__badge-check">✓</span>
-                        <span><strong>Диагностика VIDA — 0 ₽</strong> при ремонте</span>
-                    </div>
-                    <div class="hero__trust-badge">
-                        <span class="hero__badge-check">✓</span>
-                        <span><strong>Честная смета</strong> без скрытых наценок</span>
-                    </div>
-                    <div class="hero__trust-badge">
-                        <span class="hero__badge-check">✓</span>
-                        <span><strong>Доступ в ремзону</strong> разрешён • Гарантия 12 мес.</span>
-                    </div>
-                </div>
-
-                <div class="hero__buttons">
-                    <a href="tel:+74957900949" class="btn btn--hero-phone">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                        Позвонить: +7 (495) 790-09-49
-                    </a>
-                </div>
-            </div>
-
-            <!-- Open Quick Booking Form Card -->
-            <div id="quick-booking" class="hero__quick-form-card">
-                <div class="quick-form__header">
-                    <span class="quick-form__overhead">Онлайн-запись</span>
-                    <h3 class="quick-form__title">Экспресс-запись на сервис</h3>
-                    <p class="quick-form__subtitle">Перезвоним за 5 минут, назовём точную стоимость работ</p>
-                </div>
-                <form class="booking-form quick-form__body" data-form-type="ajax">
-                    <input type="hidden" name="action" value="vlprime_booking">
-                    <div class="quick-form__group">
-                        <input type="text" name="name" placeholder="Ваше имя *" class="form-input" required>
-                    </div>
-                    <div class="quick-form__group">
-                        <input type="tel" name="phone" placeholder="+7 (___) ___-__-__ *" class="form-input" required>
-                    </div>
-                    <div class="quick-form__group">
-                        <select name="model" class="form-select">
-                            <option value="" disabled selected>Выберите модель Volvo</option>
-                            <option value="XC90">Volvo XC90</option>
-                            <option value="XC70">Volvo XC70</option>
-                            <option value="XC60">Volvo XC60</option>
-                            <option value="XC40">Volvo XC40</option>
-                            <option value="S90">Volvo S90</option>
-                            <option value="S80">Volvo S80</option>
-                            <option value="S60">Volvo S60</option>
-                            <option value="V90">Volvo V90</option>
-                            <option value="V60">Volvo V60</option>
-                            <option value="Other">Другая модель</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn--primary quick-form__submit">
-                        Записаться на диагностику за 0 ₽
-                    </button>
-                    <p class="quick-form__policy">
-                        Нажимая кнопку, вы соглашаетесь с условиями обработки данных
-                    </p>
-                </form>
-            </div>
+        <div class="hero__content">
+            <span class="hero__overhead"><?php the_field('hero_subtitle'); ?></span>
+            <h1 class="hero__title"><?php the_field('hero_title'); ?></h1>
+            <p class="hero__subtitle"><?php the_field('hero_descr'); ?></p>
+            <a href="<?php echo get_field('hero_btn')['url'] ?>" class="btn btn--primary" data-modal-target="bookingModal">
+                <?php echo get_field('hero_btn')['title'] ?>
+            </a>
         </div>
     </div>
 </section>
