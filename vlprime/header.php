@@ -16,19 +16,61 @@
 <head>
 	<meta charset="<?php bloginfo('charset'); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Специализированный автосервис Volvo в Москве. Компьютерная диагностика VIDA, ТО, ремонт двигателей и АКПП, оригинальные запчасти с гарантией.">
-	<link rel="icon" href="<?php echo get_template_directory_uri(); ?>/favicon.ico" type="image/x-icon">
+<?php
+	$vlp_title = wp_get_document_title();
+	$vlp_url = home_url('/');
+	$vlp_img = get_template_directory_uri() . '/assets/img/background_hero.png';
+	$vlp_desc = 'Специализированный автосервис Volvo в Москве (ул. Ермакова Роща, 7А). Диагностика VIDA, плановое ТО, ремонт ДВС, АКПП, муфт Haldex и угловых передач с гарантией.';
+	$vlp_og_type = 'website';
+
+	if (is_front_page()) {
+		$vlp_title = 'Специализированный сервис Volvo VL Prime в Москве';
+	} elseif (is_page('uslugi')) {
+		$vlp_url = get_permalink();
+		$vlp_title = 'Услуги и онлайн-калькулятор ремонта Volvo | VL Prime';
+		$vlp_desc = 'Услуги и расчёт стоимости ремонта Volvo в техцентре VL Prime в Москве: ТО, диагностика VIDA, замена ГРМ, обслуживание Haldex, замена втулки угловой передачи, ремонт АКПП Aisin.';
+	} elseif (is_category('blog')) {
+		$vlp_url = get_category_link(get_queried_object_id());
+		$vlp_title = 'Блог техцентра VL Prime: статьи по ремонту и обслуживанию Volvo';
+		$vlp_desc = 'Технические статьи мастеров VL Prime: регламент замены ГРМ, обслуживание муфты Haldex, мойка радиаторов, замена масла АКПП и решение типовых проблем Volvo.';
+	} elseif (is_category('gallery')) {
+		$vlp_url = get_category_link(get_queried_object_id());
+		$vlp_title = 'Галерея работ и кейсов ремонта Volvo | VL Prime';
+		$vlp_desc = 'Реальные кейсы ремонта автомобилей Volvo в цехе VL Prime с дефектовкой, этапами работ и детальными сметами.';
+	} elseif (is_singular()) {
+		$vlp_url = get_permalink();
+		$vlp_og_type = is_single() ? 'article' : 'website';
+		$vlp_title = get_the_title() . ' | VL Prime';
+		$raw_excerpt = get_the_excerpt();
+		if (empty($raw_excerpt)) {
+			$raw_excerpt = wp_strip_all_tags(get_post_field('post_content', get_queried_object_id()));
+		}
+		$clean_desc = trim(preg_replace('/\s+/u', ' ', html_entity_decode(wp_strip_all_tags($raw_excerpt), ENT_QUOTES, 'UTF-8')));
+		if (!empty($clean_desc)) {
+			$vlp_desc = mb_substr($clean_desc, 0, 160);
+			if (mb_strlen($clean_desc) > 160) {
+				$vlp_desc = preg_replace('/\s+\S*$/u', '', $vlp_desc) . '...';
+			}
+		}
+		$thumb = get_the_post_thumbnail_url(get_queried_object_id(), 'large');
+		if (!empty($thumb)) {
+			$vlp_img = function_exists('vlprime_img_url') ? vlprime_img_url($thumb) : $thumb;
+		}
+	}
+	?>
+	<meta name="description" content="<?php echo esc_attr($vlp_desc); ?>">
+	<link rel="icon" href="<?php echo esc_url(home_url('/favicon.svg')); ?>" type="image/svg+xml">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 	<!-- Open Graph / Meta -->
 	<meta property="og:locale" content="ru_RU">
-	<meta property="og:type" content="website">
+	<meta property="og:type" content="<?php echo esc_attr($vlp_og_type); ?>">
 	<meta property="og:site_name" content="VL Prime">
-	<meta property="og:title" content="VL Prime — Премиальный сервис Volvo в Москве">
-	<meta property="og:description" content="Профессиональный сервис и ТО автомобилей Volvo в Москве. Диагностика VIDA, оригинальные запчасти, гарантия.">
-	<meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/assets/img/background_hero.png">
-	<meta property="og:url" content="<?php echo esc_url(home_url('/')); ?>">
+	<meta property="og:title" content="<?php echo esc_attr($vlp_title); ?>">
+	<meta property="og:description" content="<?php echo esc_attr($vlp_desc); ?>">
+	<meta property="og:image" content="<?php echo esc_url($vlp_img); ?>">
+	<meta property="og:url" content="<?php echo esc_url($vlp_url); ?>">
 
 	<!-- Schema.org Microdata (AutoRepair) -->
 	<script type="application/ld+json">
@@ -81,17 +123,17 @@
 	   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
 	   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-	   ym(95212734, "init", {
-			clickmap:true,
-			trackLinks:true,
-			accurateTrackBounce:true,
-			webvisor:true
-	   });
 	   ym(114435196, "init", {
 			clickmap:true,
 			trackLinks:true,
 			accurateTrackBounce:true,
 			webvisor:true
+	   });
+	   ym(95212734, "init", {
+			clickmap:true,
+			trackLinks:true,
+			accurateTrackBounce:true,
+			webvisor:false
 	   });
 	</script>
 	<noscript><div><img src="https://mc.yandex.ru/watch/95212734" style="position:absolute; left:-9999px;" alt="" /><img src="https://mc.yandex.ru/watch/114435196" style="position:absolute; left:-9999px;" alt="" /></div></noscript>

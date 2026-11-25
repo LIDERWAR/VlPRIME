@@ -157,7 +157,6 @@
                 <ul class="ms-card__list">
                     <li>Чтение кодов ошибок</li>
                     <li>Адаптация блоков</li>
-                    <li>Обновление ПО</li>
                 </ul>
             </a>
             <!-- We will add the rest in full implementation or loop -->

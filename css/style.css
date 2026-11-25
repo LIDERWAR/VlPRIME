@@ -682,14 +682,18 @@ img {
     display: flex;
     align-items: center;
     padding: 40px;
-    background-color: #000;
-    border: 1px solid transparent;
-    transition: transform 0.3s ease;
+    background-color: var(--color-surface);
+    background-clip: padding-box;
+    border: 2px solid var(--color-surface);
+    box-shadow: inset 0 0 0 2px var(--color-surface);
+    isolation: isolate;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .promo-card:hover {
     transform: translateY(-5px);
     border-color: var(--color-primary);
+    box-shadow: 0 16px 36px rgba(236, 97, 35, 0.2), inset 0 0 0 1px rgba(11, 11, 13, 0.9);
 }
 
 .promo-card__content {
@@ -731,42 +735,34 @@ img {
     background-image: url('../assets/img/promo_1.webp');
     background-size: cover;
     background-position: center;
-}
-
-.promo-card--primary .promo-card__bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 100%);
-    z-index: 1;
-    transition: background 0.3s ease;
-}
-
-.promo-card--primary:hover .promo-card__bg {
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 100%);
+    background-repeat: no-repeat;
 }
 
 .promo-card--secondary {
     background-image: url('../assets/img/promo_2.webp');
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
-.promo-card--secondary .promo-card__bg {
+.promo-card__bg {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 100%);
+    inset: -1px;
+    border-radius: inherit;
+    background:
+        radial-gradient(ellipse at 65% 50%, rgba(11, 11, 13, 0.15) 0%, rgba(11, 11, 13, 0.72) 72%, rgba(11, 11, 13, 0.96) 100%),
+        linear-gradient(90deg, rgba(11, 11, 13, 0.96) 0%, rgba(11, 11, 13, 0.72) 55%, rgba(11, 11, 13, 0.92) 100%);
+    box-shadow: inset 0 0 0 2px var(--color-surface);
     z-index: 1;
-    transition: background 0.3s ease;
+    pointer-events: none;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-.promo-card--secondary:hover .promo-card__bg {
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 100%);
+.promo-card:hover .promo-card__bg {
+    background:
+        radial-gradient(ellipse at 65% 50%, rgba(11, 11, 13, 0.05) 0%, rgba(11, 11, 13, 0.6) 72%, rgba(11, 11, 13, 0.9) 100%),
+        linear-gradient(90deg, rgba(11, 11, 13, 0.88) 0%, rgba(11, 11, 13, 0.56) 55%, rgba(11, 11, 13, 0.84) 100%);
+    box-shadow: inset 0 0 0 1px rgba(11, 11, 13, 0.8);
 }
 
 /* Outline Button Variant for Dark Cards */
